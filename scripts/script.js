@@ -5,7 +5,8 @@ const blockIPAdress = { // Блок с запросом айпи адресса
 
 const blockAuthorization = { // Блок авторизации
     block: document.querySelector('.authorization'),
-    input: document.querySelector('.authorization__input')
+    input: document.querySelector('.authorization__input'),
+    error_info: document.querySelector('.authorization__error')
 }
 
 const blockChat = { // Блок чата
@@ -36,7 +37,7 @@ function connectToServer() {
     socket.onmessage = (event) => { // Обработка сообщений от сервера
         const response = JSON.parse(event.data);
         console.log(response);
-        if (response.type === null) {
+        if (response.type === 'authorization') {
                 requestList.forEach((object)=>{
                 if (object.id == response.requestID) {
                     object.callbackFunction(response);
@@ -58,6 +59,8 @@ function connectToServer() {
         if (event.key === 'Enter') {
             if (isCorrectNickname(blockAuthorization.input.value)) { // Если ник коректный мы отправляем на сервер
                 sendRequestAuth(blockAuthorization.input.value);
+            } else {
+                blockAuthorization.error_info.textContent = 'Никнейм должен состоять от 3 до 20 символов и не должен иметь пробелов'
             }
         }
     });
@@ -127,8 +130,19 @@ function connectToServer() {
 
     function authorization(response) { // Авторизация
         if (response.code == 0) { // Если все отлично от скрываем блок ввода имени и открываем чат
-            blockAuthorization.block.classList.add('hide');
-            blockChat.block.classList.remove('hide');
+            
+        }
+
+        switch (response.code) {
+            case 0 : { // Если все отлично от скрываем блок ввода имени и открываем чат
+                blockAuthorization.block.classList.add('hide');
+                blockChat.block.classList.remove('hide');
+                break;
+            }
+            case 1 : { // Ник занят 
+                blockAuthorization.error_info.textContent = response.response;
+                break;
+            }
         }
     }
 }

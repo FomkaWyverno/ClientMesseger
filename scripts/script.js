@@ -37,6 +37,16 @@ function connectToServer() {
     socket.onmessage = (event) => { // Обработка сообщений от сервера
         const response = JSON.parse(event.data);
         console.log(response);
+        switch(response.type) {
+            case 'authorization' : {
+
+                break;
+            }
+            case 'message' : {
+                
+                break;
+            }
+        }
         if (response.type === 'authorization') {
                 requestList.forEach((object)=>{
                 if (object.id == response.requestID) {

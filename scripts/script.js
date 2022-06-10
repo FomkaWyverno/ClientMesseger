@@ -12,7 +12,9 @@ const blockAuthorization = { // Блок авторизации
 const blockChat = { // Блок чата
     block : document.querySelector('.chat'),
     messages : document.querySelector('.chat__messages'),
-    input : document.querySelector('.chat__input')
+    input : document.querySelector('.chat__input'),
+    nameBlock : document.querySelector('.chat__name'),
+    nameSpan : document.querySelector('.chat__nameText')
 }
 
 
@@ -38,31 +40,47 @@ function connectToServer() {
         const response = JSON.parse(event.data);
         console.log(response);
         switch(response.type) {
-            case 'authorization' : {
-
+            case 'authorization' : { // Тип сообщение от сервера авторизация
+                requestList.forEach((object) => { // Перебираем список запросов которые мы сделали
+                    if (object.id == response.requestID) { // Если мы нашли наш запрос
+                        object.callbackFunction(response); // Берем ссылку на функцию и вызываем её с аргументом ответа сервера
+                    }
+                    delete object; // Удаляем обьект запроса который мы сохраняли
+                    return; // Завершаем поиск
+                });
                 break;
             }
-            case 'message' : {
-                
-                break;
-            }
-        }
-        if (response.type === 'authorization') {
-                requestList.forEach((object)=>{
-                if (object.id == response.requestID) {
-                    object.callbackFunction(response);
-                }
-                delete object;
-                return;
-            });
-        } else {
-            if (response.type === 'message') {
-                const data = JSON.parse(response.response);
+            case 'message' : { // Тип сообщение от сервера пришло сообщение
+                const data = JSON.parse(response.data); // Парсим данные которые пришли нам
                 console.log(data);
-                receivedMessage(data.nickname,data.message);
+                receivedMessage(data); // Вызываем функцию отображение в UI сообщения
+                break;
             }
-        }
-        
+            case 'joinToChat' : {
+                const data = response.data;
+                console.log(data);
+                receivedJoinUserToChat(data);
+                break;
+            }
+            case 'listMessages' : {
+                const list = JSON.parse(response.data);
+                console.log(list);
+                list.slice().reverse().forEach((data) => {
+                    receivedMessage(data);
+                });
+                break;
+            }
+            case 'setNameChat' : {
+                const nameChat = response.data;
+                console.log(nameChat);
+                blockChat.nameSpan.textContent = nameChat;
+                break;
+            }
+            case 'deleteElement' : {
+                const message = JSON.parse(response.data);
+                receivedDeleteElementChat(message);
+            }
+        }    
     }
 
     blockAuthorization.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для авторизации
@@ -75,10 +93,12 @@ function connectToServer() {
         }
     });
 
-    blockChat.input.addEventListener('keypress',(event) => {
+    blockChat.input.addEventListener('keypress',(event) => { // Считываем сообщении при нажатия Enter
         if (event.key === 'Enter') {
-            sendMessage(blockChat.input.value);
+            if (blockChat.input.value != '') {
+                sendMessage(blockChat.input.value);
             blockChat.input.value = '';
+            }
         }
     });
 
@@ -86,10 +106,11 @@ function connectToServer() {
         return nickname.length > 3 && nickname.length <= 20 && !nickname.includes(' ');
     }
 
-    function receivedMessage(nickname,message) { // Добавляем блок сообщения в чате
+    function receivedMessage(data) { // Добавляем блок сообщения в чате
 
         const blockMessage = document.createElement('div');
         blockMessage.classList.add('chat__message');
+        blockMessage.id = `element:${data.id}`;
 
         const blockNickname = document.createElement('span');
         const blockText = document.createElement('span');
@@ -98,11 +119,28 @@ function connectToServer() {
 
         blockMessage.appendChild(blockNickname);
         blockMessage.appendChild(blockText);
-        blockNickname.textContent = `${nickname}: `;
-        blockText.textContent = message;
+        blockNickname.textContent = `${data.nickname}: `;
+        blockText.textContent = data.message;
 
         blockChat.messages.appendChild(blockMessage);
         
+    }
+
+    function receivedJoinUserToChat(data) { // Добавляем блок присоединение пользователя
+        data = JSON.parse(data);
+        const blockConnect = document.createElement('div');
+        blockConnect.classList.add('chat__connect');
+        blockConnect.id = `element:${data.id}`;
+        console.log(`Element: ${data.name}`);
+        const span = document.createElement('span');
+        span.textContent = `Присоеденилися ${data.name} к чату.`;
+        blockConnect.appendChild(span);
+        blockChat.messages.appendChild(blockConnect);
+    }
+
+    function receivedDeleteElementChat(data) {
+        const element = document.getElementById(`element:${data.id}`);
+        element.remove();
     }
 
     function sendMessage(message) { // Отправить сообщение
@@ -150,7 +188,7 @@ function connectToServer() {
                 break;
             }
             case 1 : { // Ник занят 
-                blockAuthorization.error_info.textContent = response.response;
+                blockAuthorization.error_info.textContent = response.data;
                 break;
             }
         }

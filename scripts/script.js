@@ -82,9 +82,10 @@ function connectToServer() {
                 receivedElementsChat(response.data); // Добавляем присуствующие элементы в чат
                 break;
             }
-            case 'setNameChat' : {
+            case 'selfJoinToChat' : {
                 const nameChat = response.data;
                 console.log(nameChat);
+                clearChat();
                 blockChat.nameSpan.textContent = nameChat;
                 break;
             }
@@ -94,6 +95,11 @@ function connectToServer() {
             }
 
             case 'gotChatList' : {
+                callbackFunction(response);
+                break;
+            }
+
+            case 'tryJoinToChat' : {
                 callbackFunction(response);
                 break;
             }
@@ -130,9 +136,7 @@ function connectToServer() {
             console.log('chat list open');
             sendRequestGetListChat();
         } else {
-            blockListChats.blockList.classList.add('hide');
-            console.log('chat list hide');
-            clearChatList();
+            closeChatList();
         }
         
     });
@@ -246,6 +250,29 @@ function connectToServer() {
     function receivedTryJoinToChat(data) { // Функция которая проверяет вошел ли пользователь в чат или нет
         console.log("receivedTryJoinToChat DATA ->");
         console.log(data);
+        switch (data.code) {
+            case 0 : {
+                closeChatList();
+                break;
+            }
+            case 1 : {
+                const DATA = JSON.parse(data.data);
+                const span = document.getElementById(`chatErrorID:${DATA.chatID}`);
+                span.textContent = 'Неверный пароль!';
+                break;
+            }
+
+            case 3 : {
+                const DATA = JSON.parse(data.data);
+                const span = document.getElementById(`chatErrorID:${DATA.chatID}`);
+                const element = document.getElementById(`chatID:${DATA.chatID}`);
+                span.textContent = 'Чата больше не существует';
+                setTimeout(() =>{
+                    element.remove();
+                },3000);
+                break;
+            }
+        }
     }
 
     function sendMessage(message) { // Отправить сообщение
@@ -348,6 +375,7 @@ function connectToServer() {
             const nameChat = document.createElement('span'); // Создаем спан имени чата
             const inputPassword = document.createElement('input'); // Создаем инпут для пароля
             const buttonConnect = document.createElement('button'); // Создаем кнопку для присоидинения к чату
+            const textError = document.createElement('span'); // Создаем спан для вывода ошибки
             nameChat.textContent = chat.nameChat; // Устанавливаем название чата
             elementList.dataset.nameChat = chat.nameChat; // Устанавливаем атрибут данных имя чата
             inputPassword.type = 'password'; // Ставим тип инпута пароль
@@ -356,6 +384,7 @@ function connectToServer() {
             nameChat.classList.add('chatElement__nameChat'); // Добавляем класс для имени чата
             inputPassword.classList.add('chatElement__inputPassword'); // Добавляем класс для инпута пароля
             buttonConnect.classList.add('chatElement__button'); // Добавляем класс для кнопки подключения
+            textError.classList.add('chatElement__textError'); // Добавляем класс для отображение текста ошибки
 
             if (!chat.hasPassword) { // Если нету пароля у чата
                 inputPassword.classList.add('hide'); // Скрываем поле ввода для пароля
@@ -368,20 +397,45 @@ function connectToServer() {
                 sendReqestTryJoinToChat(chat.id, inputPassword.value);
             });
 
+            inputPassword.addEventListener('keypress', (event) => { // При нажатия на ENTER отправляем запрос на подключение к чату 
+                if (event.key === 'Enter') {
+                    sendReqestTryJoinToChat(chat.id, inputPassword.value);
+                }
+            }); 
+
+            inputPassword.addEventListener('input', () => { // При вводе удаляем причину ошибки подключения к чату
+                textError.textContent = '';
+            });
+
             chatElement.appendChild(nameChat); // Добавляем имя чата в чат элемент
             chatElement.appendChild(inputPassword); // Добавляем инпут пароля в чат элемент
             chatElement.appendChild(buttonConnect); // Добавляем кнопку подключения в чат элемент
+            chatElement.appendChild(textError); // Добавляем текстовую ошибку в чат элемент
 
+            textError.id = `chatErrorID:${chat.id}`; // Устанавливаем спану который выводит ошибку id
             elementList.id = `chatID:${chat.id}`; // Устанавливаем элементу id
 
             blockListChats.list.appendChild(elementList); // Добавляем элемент листа в лист
         });
     }
 
-    function clearChatList() { // Очищаем весь чат
+    function clearChatList() { // Очищаем весь список чатов
         console.log('Remove childer for chat list')
         while (blockListChats.list.firstChild) {
             blockListChats.list.firstChild.remove();
         }
     } 
+
+    function closeChatList() { // Закрыть чат лист
+        blockListChats.blockList.classList.add('hide');
+        console.log('chat list hide');
+        clearChatList();
+    }
+
+    function clearChat() { // Очищаем весь чат
+        console.log('Clear chat');
+        while (blockChat.messages.firstChild) {
+            blockChat.messages.firstChild.remove();
+        }
+    }
 }

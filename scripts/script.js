@@ -29,7 +29,8 @@ const blockListChats = { // Блок список чатов
     block : document.querySelector('.listChats'),
     buttonOpenList : document.querySelector('.listChats__buttonOpenList'),
     blockList : document.querySelector('.listChats__list'),
-    list : document.querySelector('.listChats__list__ul')
+    list : document.querySelector('.listChats__list__ul'),
+    inputSearch : document.querySelector('.listChats__list__inputSearchChat')
 }
 
 
@@ -118,11 +119,11 @@ function connectToServer() {
         }
     });
 
-    blockCreateChat.button.addEventListener('click', () => { // Открыть закрыть инпуты
+    blockCreateChat.button.addEventListener('click', () => { // Открыть закрыть инпуты для создания чата
         blockCreateChat.blockInput.classList.toggle('hide');
     });
 
-    blockListChats.buttonOpenList.addEventListener('click', () => {
+    blockListChats.buttonOpenList.addEventListener('click', () => { // Открыть закрыть чаты
         
         if (blockListChats.blockList.classList.contains('hide')) {
             blockListChats.blockList.classList.remove('hide');
@@ -131,8 +132,31 @@ function connectToServer() {
         } else {
             blockListChats.blockList.classList.add('hide');
             console.log('chat list hide');
+            clearChatList();
         }
         
+    });
+
+    blockListChats.inputSearch.addEventListener('input', () => { // При вводе текста ищем чат соотвествующий вводу
+        const value = blockListChats.inputSearch.value;
+        const length = value.length;
+
+        const list = blockListChats.list;
+        
+        for (let i = 0; i < list.children.length; i++) { // Проходимся по каждому элемента списка
+            const element = list.children[i]; // Сохраняем элемент в переменную
+            let nameChat = element.getAttribute('data-name-chat'); // Узнаем значение атрибута названия чата
+            nameChat = nameChat.substring(0,value.length);
+            if (nameChat.toLowerCase() !== value.toLowerCase()) {
+                console.log('Not Fit item ->')
+                console.log(element);
+                element.classList.add('hide');
+            } else {
+                console.log('Fit item ->');
+                console.log(element);
+                element.classList.remove('hide'); 
+            }
+        }
     });
 
     function isCorrectNickname(nickname) {
@@ -214,9 +238,14 @@ function connectToServer() {
         blockChat.messages.appendChild(blockConnect);
     }
 
-    function receivedDeleteElementChat(data) {
+    function receivedDeleteElementChat(data) { // Функция удаление элемента из чата
         const element = document.getElementById(`element:${data.id}`);
         element.remove();
+    }
+
+    function receivedTryJoinToChat(data) { // Функция которая проверяет вошел ли пользователь в чат или нет
+        console.log("receivedTryJoinToChat DATA ->");
+        console.log(data);
     }
 
     function sendMessage(message) { // Отправить сообщение
@@ -237,9 +266,18 @@ function connectToServer() {
 
     function sendRequestGetListChat() { // Отправить запрос на список листа
         const request = {
-            type : "getChatList"
+            type : 'getChatList'
         }
         sendDate(request,gotChatList);
+    }
+
+    function sendReqestTryJoinToChat(id, password) { // Отправить запрос на подключение
+        const request = {
+            type : 'tryJoinToChat',
+            chatID : id,
+            password : password
+        }
+        sendDate(request,receivedTryJoinToChat);
     }
 
     function callbackFunction(response) { // Функция поиска калл бэк функции и вызова её
@@ -311,6 +349,7 @@ function connectToServer() {
             const inputPassword = document.createElement('input'); // Создаем инпут для пароля
             const buttonConnect = document.createElement('button'); // Создаем кнопку для присоидинения к чату
             nameChat.textContent = chat.nameChat; // Устанавливаем название чата
+            elementList.dataset.nameChat = chat.nameChat; // Устанавливаем атрибут данных имя чата
             inputPassword.type = 'password'; // Ставим тип инпута пароль
             inputPassword.placeholder = 'Введите пароль'; // Устанавливаем плейсхолдер
             buttonConnect.textContent = 'Подключиться'; // Устанавливаем текстовый конент кнопки
@@ -318,11 +357,31 @@ function connectToServer() {
             inputPassword.classList.add('chatElement__inputPassword'); // Добавляем класс для инпута пароля
             buttonConnect.classList.add('chatElement__button'); // Добавляем класс для кнопки подключения
 
+            if (!chat.hasPassword) { // Если нету пароля у чата
+                inputPassword.classList.add('hide'); // Скрываем поле ввода для пароля
+                elementList.dataset.hasPassword = 'false'; // Ставим атрибут что чат не имеет пароля
+            } else { // Иначе
+                elementList.dataset.hasPassword = 'true'; // Ставим атрибут что чат имеет пароль
+            }
+
+            buttonConnect.addEventListener('click', () => { // При клике отправляем запрос на подключение к чату 
+                sendReqestTryJoinToChat(chat.id, inputPassword.value);
+            });
+
             chatElement.appendChild(nameChat); // Добавляем имя чата в чат элемент
             chatElement.appendChild(inputPassword); // Добавляем инпут пароля в чат элемент
             chatElement.appendChild(buttonConnect); // Добавляем кнопку подключения в чат элемент
 
+            elementList.id = `chatID:${chat.id}`; // Устанавливаем элементу id
+
             blockListChats.list.appendChild(elementList); // Добавляем элемент листа в лист
         });
     }
+
+    function clearChatList() { // Очищаем весь чат
+        console.log('Remove childer for chat list')
+        while (blockListChats.list.firstChild) {
+            blockListChats.list.firstChild.remove();
+        }
+    } 
 }

@@ -13,42 +13,46 @@
         <span>Введите адресс сервера</span>
         <input class="ipAdress__input">
     </div>
-    <div class="authorization hide">
-        <div class="authorization__block">
-            <span>Введите никнейм</span>
-            <input class="authorization__input">
-            <span class="authorization__error"></span>
-        </div> 
-    </div>
-    <div class="chat hide">
-        <div class="chat__name">
-            <span class="chat__nameText"></span>
+    <div class="messager hide">
+        <div class="authorization hide">
+            <div class="authorization__block">
+                <span>Введите никнейм</span>
+                <input class="authorization__input">
+                <span class="authorization__error"></span>
+            </div>
         </div>
-        <div class="chat__messages">
-        </div>
-        <div>
-            <input class="chat__input" placeholder="Введите ваше сообщение...">
-        </div>
-    </div>
-    <div class="createChat hide">
-        <button class="createChat__button">
-            <span class="createChat__button__text">Создать чат</span>
-        </button>
-        <div class="createChat__input hide">
-            <input class="createChat__input__inputNameChat" placeholder="Введите название чата" type="text">
-            <input class="createChat__input__inputPassword" placeholder="Введите пароль (необезательно)" type="text">
+        <div class="chat hide">
+            <div class="chat__name">
+                <span class="chat__nameText"></span>
+            </div>
+            <div class="chat__messages">
+            </div>
+            <div>
+                <input class="chat__input" placeholder="Введите ваше сообщение...">
+            </div>
+            <div class="createChat hide">
+                <button class="createChat__button">
+                    <span class="createChat__button__text">Создать чат</span>
+                </button>
+                <div class="createChat__input hide">
+                    <input class="createChat__input__inputNameChat" placeholder="Введите название чата" type="text">
+                    <input class="createChat__input__inputPassword" placeholder="Введите пароль (необезательно)" type="text">
+                </div>
+            
+            </div>
+            <div class="listChats hide">
+                <button class="listChats__buttonOpenList">
+                    <span class="listChats__buttonOpenList__text">Открыть список чатов</span>
+                </button>
+                <div class="listChats__list hide">
+                    <input class="listChats__list__inputSearchChat" type="text" placeholder="Введите чат...">
+                    <ul class="listChats__list__ul">
+                    </ul>
+                </div>
+            </div>
         </div>
         
     </div>
-    <div class="listChats hide">
-        <button class="listChats__buttonOpenList">
-            <span class="listChats__buttonOpenList__text">Открыть список чатов</span>
-        </button>
-        <div class="listChats__list hide">
-            <input class="listChats__list__inputSearchChat" type="text" placeholder="Введите чат...">
-            <ul class="listChats__list__ul">
-            </ul>
-        </div>
-    </div>
+    
 </body>
 </html>

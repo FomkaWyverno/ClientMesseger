@@ -1,3 +1,5 @@
+const messagerBlock = document.querySelector('.messager'); // Импортируем блок мессенджера
+
 const blockIPAdress = { // Блок с запросом айпи адресса
     block: document.querySelector('.ipAdress'),
     input: document.querySelector('.ipAdress__input')
@@ -50,6 +52,7 @@ function connectToServer() {
     socket.onopen = () => { // Мы получили соединение с сервером 
         blockIPAdress.block.classList.add('hide'); // Скрываем блок с вводом IP
         blockAuthorization.block.classList.remove('hide'); // Показываем блок с авторизацией
+        messagerBlock.classList.remove('hide'); // Включаем внутриность мессенджера
     };
 
     socket.onmessage = (event) => { // Обработка сообщений от сервера
@@ -105,6 +108,14 @@ function connectToServer() {
             }
         }    
     }
+
+    socket.onclose = disconnectServer; // Обработка отключение от сервера
+
+    socket.onerror = (event) => {
+        console.log("Error connected causes ->");
+        console.log(event);
+        disconnectServer();
+    };
 
     blockAuthorization.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для авторизации
         if (event.key === 'Enter') {
@@ -335,16 +346,15 @@ function connectToServer() {
     }
 
     function authorization(response) { // Авторизация
-        if (response.code == 0) { // Если все отлично от скрываем блок ввода имени и открываем чат
-            
-        }
-
         switch (response.code) {
             case 0 : { // Если все отлично от скрываем блок ввода имени и открываем чат
+
+                blockAuthorization.input.value = '';
                 blockAuthorization.block.classList.add('hide');
                 blockCreateChat.block.classList.remove('hide');
                 blockListChats.block.classList.remove('hide');
                 blockChat.block.classList.remove('hide');
+                
                 break;
             }
             case 1 : { // Ник занят 
@@ -419,17 +429,17 @@ function connectToServer() {
         });
     }
 
+    function closeChatList() { // Закрыть чат лист
+        blockListChats.blockList.classList.add('hide');
+        console.log('chat list hide');
+        clearChatList();
+    }
+
     function clearChatList() { // Очищаем весь список чатов
         console.log('Remove childer for chat list')
         while (blockListChats.list.firstChild) {
             blockListChats.list.firstChild.remove();
         }
-    } 
-
-    function closeChatList() { // Закрыть чат лист
-        blockListChats.blockList.classList.add('hide');
-        console.log('chat list hide');
-        clearChatList();
     }
 
     function clearChat() { // Очищаем весь чат
@@ -437,5 +447,22 @@ function connectToServer() {
         while (blockChat.messages.firstChild) {
             blockChat.messages.firstChild.remove();
         }
+    }
+
+    function clearNameChat() { // Очищаем имя чата
+        blockChat.nameSpan.textContent = ''
+    }
+
+    function clearAll() { // Очищаем все что мы получили от сервера
+        clearChat();
+        clearChatList();
+        clearNameChat();
+    }
+
+    function disconnectServer() {
+        messagerBlock.classList.add('hide'); // Скрываем месенджер
+        blockIPAdress.block.classList.remove('hide'); // Убираем с инпута ip скрытие
+        blockChat.block.classList.add('hide'); // Скрываем блок чата
+        clearAll(); // Очищаем все данные
     }
 }

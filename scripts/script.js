@@ -2,13 +2,15 @@ const messagerBlock = document.querySelector('.messager'); // Импортиру
 
 const blockIPAdress = { // Блок с запросом айпи адресса
     block: document.querySelector('.ipAdress'),
-    input: document.querySelector('.ipAdress__input')
+    input: document.querySelector('.ipAdress__input'),
+    text : document.querySelector('.ipAdress__text')
 }
 
 const blockAuthorization = { // Блок авторизации
     block: document.querySelector('.authorization'),
     input: document.querySelector('.authorization__input'),
-    error_info: document.querySelector('.authorization__error')
+    error_info: document.querySelector('.authorization__error'),
+    text_input: document.querySelector('.authorization__text') 
 }
 
 const blockChat = { // Блок чата
@@ -16,12 +18,14 @@ const blockChat = { // Блок чата
     messages : document.querySelector('.chat__messages'),
     input : document.querySelector('.chat__input'),
     nameBlock : document.querySelector('.chat__name'),
-    nameSpan : document.querySelector('.chat__nameText')
+    nameSpan : document.querySelector('.chat__nameText'),
+    buttonToMainChat : document.querySelector('.chat__connectToMainChat')
 }
 
 const blockCreateChat = { // Блок создания чата
     block : document.querySelector('.createChat'),
     button : document.querySelector('.createChat__button'),
+    textButton : document.querySelector('.createChat__button__text'),
     blockInput : document.querySelector('.createChat__input'),
     inputNameChat : document.querySelector('.createChat__input__inputNameChat'),
     inputPassword : document.querySelector('.createChat__input__inputPassword')
@@ -30,11 +34,29 @@ const blockCreateChat = { // Блок создания чата
 const blockListChats = { // Блок список чатов
     block : document.querySelector('.listChats'),
     buttonOpenList : document.querySelector('.listChats__buttonOpenList'),
+    textButtonOpenList : document.querySelector('.listChats__buttonOpenList__text'),
     blockList : document.querySelector('.listChats__list'),
     list : document.querySelector('.listChats__list__ul'),
-    inputSearch : document.querySelector('.listChats__list__inputSearchChat')
+    inputSearch : document.querySelector('.listChats__list__inputSearchChat'),
 }
 
+const textConnectToMainChat = 'Перейти в Global Chat';
+const textInputIP = 'Введите адресс сервера';
+const textPressUsername = 'Введите никнейм';
+const textNicknameNotFree = 'Никнейм занят!';
+const textNotCorrectNick = 'Никнейм должен состоять от 3 до 20 символов и не должен иметь пробелов';
+const textJoinUserToChat = 'присоединился к чату.';
+const textLeaveUserFromChat = 'покинул чат.';
+const textBadPassword = 'Неверный пароль!';
+const textChatNoLongerExists = 'Чата больше не существует';
+const textPlaceholderPassworForChat = 'Введите пароль';
+const textButtonConnectToPrivateChat = 'Подключиться';
+const textCreateChat = 'Создать чат';
+const textPlaceholderPressNameChat = 'Введите название чата';
+const textPlaceholderPressPasswordForChat = 'Введите пароль (необезательно)';
+const textOpenList = 'Открыть список чатов';
+const textPlaceholderSearchChat = 'Введите чат...';
+const textPlaceholderPrintYouMessage = 'Введите ваше сообщение...';
 
 blockIPAdress.input.addEventListener('keypress', (event) => { // Ивент для ввода айпи.
     if (event.key === 'Enter') { // Если пользователь нажал ETNER
@@ -42,6 +64,24 @@ blockIPAdress.input.addEventListener('keypress', (event) => { // Ивент дл
     }
 });
 
+initText();
+
+function initText() { // Иницилизация текста в блоках
+    console.log('init');
+    blockIPAdress.text.textContent = textInputIP;
+
+    blockAuthorization.text_input.textContent = textPressUsername;
+
+    blockChat.buttonToMainChat.textContent = textConnectToMainChat;
+    blockChat.input.placeholder = textPlaceholderPrintYouMessage;
+
+    blockCreateChat.textButton.textContent = textCreateChat;
+    blockCreateChat.inputNameChat.placeholder = textPlaceholderPressNameChat;
+    blockCreateChat.inputPassword.placeholder = textPlaceholderPressPasswordForChat;
+
+    blockListChats.textButtonOpenList.textContent = textOpenList;
+    blockListChats.inputSearch.placeholder = textPlaceholderSearchChat;
+}
 
 function connectToServer() {
     const socket = new WebSocket(`ws://${blockIPAdress.input.value}`); // Подключаемся в серверу
@@ -111,7 +151,7 @@ function connectToServer() {
 
     socket.onclose = disconnectServer; // Обработка отключение от сервера
 
-    socket.onerror = (event) => {
+    socket.onerror = (event) => { // Обработка ошибок
         console.log("Error connected causes ->");
         console.log(event);
         disconnectServer();
@@ -122,7 +162,7 @@ function connectToServer() {
             if (isCorrectNickname(blockAuthorization.input.value)) { // Если ник коректный мы отправляем на сервер
                 sendRequestAuth(blockAuthorization.input.value); 
             } else {
-                blockAuthorization.error_info.textContent = 'Никнейм должен состоять от 3 до 20 символов и не должен иметь пробелов'
+                blockAuthorization.error_info.textContent = textNotCorrectNick;
             }
         }
     });
@@ -161,7 +201,7 @@ function connectToServer() {
         for (let i = 0; i < list.children.length; i++) { // Проходимся по каждому элемента списка
             const element = list.children[i]; // Сохраняем элемент в переменную
             let nameChat = element.getAttribute('data-name-chat'); // Узнаем значение атрибута названия чата
-            nameChat = nameChat.substring(0,value.length);
+            nameChat = nameChat.substring(0,length);
             if (nameChat.toLowerCase() !== value.toLowerCase()) {
                 console.log('Not Fit item ->')
                 console.log(element);
@@ -174,7 +214,7 @@ function connectToServer() {
         }
     });
 
-    function isCorrectNickname(nickname) {
+    function isCorrectNickname(nickname) { // Проверяем ник что бы он состоял от 3 до 20 символов и не должен иметь пробелов
         return nickname.length > 3 && nickname.length <= 20 && !nickname.includes(' ');
     }
 
@@ -232,7 +272,7 @@ function connectToServer() {
         blockConnect.id = `element:${data.id}`;
         console.log(`Element: ${data.name}`);
         const span = document.createElement('span');
-        span.textContent = `${data.name} присоединился к чату.`;
+        span.textContent = `${data.name} ${textJoinUserToChat}`;
         blockConnect.appendChild(span);
         blockChat.messages.appendChild(blockConnect);
     }
@@ -248,7 +288,7 @@ function connectToServer() {
         blockConnect.id = `element:${data.id}`;
         console.log(`Element: ${data.name}`);
         const span = document.createElement('span');
-        span.textContent = `${data.name} покинул чат.`;
+        span.textContent = `${data.name} ${textLeaveUserFromChat}`;
         blockConnect.appendChild(span);
         blockChat.messages.appendChild(blockConnect);
     }
@@ -269,7 +309,7 @@ function connectToServer() {
             case 1 : {
                 const DATA = JSON.parse(data.data);
                 const span = document.getElementById(`chatErrorID:${DATA.chatID}`);
-                span.textContent = 'Неверный пароль!';
+                span.textContent = textBadPassword;
                 break;
             }
 
@@ -277,7 +317,7 @@ function connectToServer() {
                 const DATA = JSON.parse(data.data);
                 const span = document.getElementById(`chatErrorID:${DATA.chatID}`);
                 const element = document.getElementById(`chatID:${DATA.chatID}`);
-                span.textContent = 'Чата больше не существует';
+                span.textContent = textChatNoLongerExists;
                 setTimeout(() =>{
                     element.remove();
                 },3000);
@@ -358,7 +398,7 @@ function connectToServer() {
                 break;
             }
             case 1 : { // Ник занят 
-                blockAuthorization.error_info.textContent = response.data;
+                blockAuthorization.error_info.textContent = textNicknameNotFree;
                 break;
             }
         }
@@ -389,8 +429,8 @@ function connectToServer() {
             nameChat.textContent = chat.nameChat; // Устанавливаем название чата
             elementList.dataset.nameChat = chat.nameChat; // Устанавливаем атрибут данных имя чата
             inputPassword.type = 'password'; // Ставим тип инпута пароль
-            inputPassword.placeholder = 'Введите пароль'; // Устанавливаем плейсхолдер
-            buttonConnect.textContent = 'Подключиться'; // Устанавливаем текстовый конент кнопки
+            inputPassword.placeholder = textPlaceholderPassworForChat; // Устанавливаем плейсхолдер
+            buttonConnect.textContent = textButtonConnectToPrivateChat; // Устанавливаем текстовый конент кнопки
             nameChat.classList.add('chatElement__nameChat'); // Добавляем класс для имени чата
             inputPassword.classList.add('chatElement__inputPassword'); // Добавляем класс для инпута пароля
             buttonConnect.classList.add('chatElement__button'); // Добавляем класс для кнопки подключения

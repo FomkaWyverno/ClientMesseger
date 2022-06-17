@@ -207,6 +207,18 @@ blockCreateChat.buttonToCreate.addEventListener('click', () => { // Отправ
     sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
 });
 
+blockCreateChat.inputNameChat.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
+    if (event.key === 'Enter') {
+        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
+    }
+});
+
+blockCreateChat.inputPassword.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
+    if (event.key === 'Enter') {
+        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
+    }
+});
+
 blockListChats.buttonOpenList.addEventListener('click', () => { // Открыть закрыть чаты
 
     if (blockListChats.blockList.classList.contains('hide')) {

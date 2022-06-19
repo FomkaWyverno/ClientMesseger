@@ -237,6 +237,7 @@ td {
 .messager__otherFunction__item button {
   padding: 0;
   border: 0;
+  cursor: pointer;
 }
 
 .messager__otherFunction__item button svg {
@@ -262,6 +263,53 @@ td {
   color: #fff;
   font-size: 96px;
   padding: 10px;
+}
+
+.chat__messages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chat__inputBlock {
+  position: relative;
+  width: 100%;
+  height: 44px;
+}
+
+.chat__inputBlock__container {
+  display: flex;
+  height: 100%;
+  background-color: #282828;
+  border-radius: 10px;
+  padding: 0 10px 0 10px;
+}
+
+.chat__inputBlock__container__input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  font-size: 25px;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-weight: 300;
+  color: #cbcbcb;
+}
+
+.chat__inputBlock__container__input::placeholder {
+  color: #787878;
+}
+
+.chat__inputBlock__container__buttonSend {
+  width: 44px;
+  height: 100%;
+  border: 0;
+  cursor: pointer;
+  transition: .5s ease;
+}
+
+.chat__inputBlock__container__buttonSend:hover {
+  filter: brightness(2);
 }
 
 .hide {

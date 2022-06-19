@@ -17,10 +17,11 @@ const blockAuthorization = { // Блок авторизации
 const blockChat = { // Блок чата
     block : document.querySelector('.chat'),
     messages : document.querySelector('.chat__messages'),
-    //input : document.querySelector('.chat__input'),
+    input : document.querySelector('.chat__inputBlock__container__input'),
     nameBlock : document.querySelector('.chat__name'),
     nameSpan : document.querySelector('.chat__nameText'),
-    //buttonToMainChat : document.querySelector('.chat__connectToMainChat')
+    //buttonToMainChat : document.querySelector('.chat__connectToMainChat'),
+    buttonToSend : document.querySelector('.chat__inputBlock__container__buttonSend')
 }
 
 const blockCreateChat = { // Блок создания чата
@@ -185,14 +186,21 @@ blockAuthorization.input.addEventListener('keypress', (event) => { // Делае
     }
 });
 
-// blockChat.input.addEventListener('keypress', (event) => { // Считываем сообщении при нажатия Enter
-//     if (event.key === 'Enter') {
-//         if (blockChat.input.value != '') {
-//             sendMessage(blockChat.input.value);
-//             blockChat.input.value = '';
-//         }
-//     }
-// });
+blockChat.input.addEventListener('keypress', (event) => { // Считываем сообщение при нажатия Enter
+    if (event.key === 'Enter') {
+        if (blockChat.input.value != '') {
+            sendMessage(blockChat.input.value);
+            blockChat.input.value = '';
+        }
+    }
+});
+
+blockChat.buttonToSend.addEventListener('click', () => { // Считываем сообщение при нажатия на кнопку отправки
+    if (blockChat.input.value != '') {
+        sendMessage(blockChat.input.value);
+        blockChat.input.value = '';
+    }
+});
 
 //blockChat.buttonToMainChat.addEventListener('click', () => { // При клике отправляем запрос на подключение к главному чату
 //    console.log('Click to join global chat');

@@ -96,22 +96,21 @@
                 <div class="chat__name">
                     <span class="chat__nameText">${NameChat}</span>
                 </div>
-                <div class="chat__messages">
-                </div>
+                <div class="chat__messages"></div>
                 <div class="chat__inputBlock">
-                    <button class="chat__buttonSend">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <image x="0" y="0" width="100%" height="100%" href="/assets/chat/sendIcon.svg"></image>
-                        </svg>
-                    </button>
-                    <input class="chat__input">
+                    <div class="chat__inputBlock__container">
+                        <input class="chat__inputBlock__container__input" placeholder="Введите сообщение...">
+                        <button class="chat__inputBlock__container__buttonSend">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <image x="0" y="0" width="100%" height="100%" href="/assets/chat/sendIcon.svg"></image>
+                            </svg>
+                        </button>
+                    </div>                    
                     <button class="chat__connectToMainChat hide"></button>
                 </div>
             </div>
             
         </div>
     </div>
-    
-    
 </body>
 </html>

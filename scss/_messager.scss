@@ -15,6 +15,7 @@
             & button {
                 padding: 0;
                 border: 0;
+                cursor: pointer;
                 & svg {
                     width: 100%;
                     height: 100%;
@@ -43,6 +44,57 @@
         color: #fff;
         font-size: 96px;
         padding: 10px;
+    }
+
+    &__messages {
+        flex-grow: 1;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    &__inputBlock {
+        position: relative;
+        width: 100%;
+        height: 44px;
+
+        &__container {
+            display: flex;
+
+            height: 100%;
+
+            background-color: #282828;
+            border-radius: 10px;
+
+            padding: 0 10px 0 10px;
+            &__input {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                font-size: 25px;
+
+                font-family: 'Yanone Kaffeesatz', sans-serif;
+                font-weight: 300;
+                color: #cbcbcb;
+
+                &::placeholder {
+                    color: #787878;
+                }
+            }
+
+            &__buttonSend {
+                width: 44px;
+                height: 100%;
+                border: 0;
+                cursor: pointer;
+                transition: .5s ease;
+
+                &:hover {
+                    filter: brightness(2);
+                }
+            }
+        }
     }
 }
 

@@ -293,13 +293,13 @@ function receivedElementsChat(data) { // Добавляем сообщения �
 function receivedMessage(data) { // Добавляем блок сообщения в чате
 
     const blockMessage = document.createElement('div');
-    blockMessage.classList.add('chat__message');
+    blockMessage.classList.add('chat__messages__message');
     blockMessage.id = `element:${data.id}`;
 
     const blockNickname = document.createElement('span');
     const blockText = document.createElement('span');
-    blockNickname.classList.add('chat__nickname');
-    blockText.classList.add('chat__text');
+    blockNickname.classList.add('chat__messages__message__nickname');
+    blockText.classList.add('chat__messages__message__text');
 
     blockMessage.appendChild(blockNickname);
     blockMessage.appendChild(blockText);

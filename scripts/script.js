@@ -17,27 +17,27 @@ const blockAuthorization = { // Блок авторизации
 const blockChat = { // Блок чата
     block : document.querySelector('.chat'),
     messages : document.querySelector('.chat__messages'),
-    input : document.querySelector('.chat__input'),
+    //input : document.querySelector('.chat__input'),
     nameBlock : document.querySelector('.chat__name'),
     nameSpan : document.querySelector('.chat__nameText'),
-    buttonToMainChat : document.querySelector('.chat__connectToMainChat')
+    //buttonToMainChat : document.querySelector('.chat__connectToMainChat')
 }
 
 const blockCreateChat = { // Блок создания чата
     block : document.querySelector('.createChat'),
     button : document.querySelector('.createChat__button'),
-    textButton : document.querySelector('.createChat__button__text'),
+    //textButton : document.querySelector('.createChat__button__text'),
     blockInput : document.querySelector('.createChat__input'),
-    inputNameChat : document.querySelector('.createChat__input__inputNameChat'),
-    inputPassword : document.querySelector('.createChat__input__inputPassword'),
-    buttonToCreate : document.querySelector('.createChat__buttonToCreate'),
+    //inputNameChat : document.querySelector('.createChat__input__inputNameChat'),
+    //inputPassword : document.querySelector('.createChat__input__inputPassword'),
+    //buttonToCreate : document.querySelector('.createChat__buttonToCreate'),
     textError : document.querySelector('.createChat__textError')
 }
 
 const blockListChats = { // Блок список чатов
     block : document.querySelector('.listChats'),
     buttonOpenList : document.querySelector('.listChats__buttonOpenList'),
-    textButtonOpenList : document.querySelector('.listChats__buttonOpenList__text'),
+    //textButtonOpenList : document.querySelector('.listChats__buttonOpenList__text'),
     blockList : document.querySelector('.listChats__list'),
     list : document.querySelector('.listChats__list__ul'),
     inputSearch : document.querySelector('.listChats__list__inputSearchChat'),
@@ -79,16 +79,16 @@ function initText() { // Иницилизация текста в блоках
 
     blockAuthorization.text_input.textContent = textPressUsername;
 
-    blockChat.buttonToMainChat.textContent = textConnectToMainChat;
-    blockChat.input.placeholder = textPlaceholderPrintYouMessage;
+    //blockChat.buttonToMainChat.textContent = textConnectToMainChat;
+    //blockChat.input.placeholder = textPlaceholderPrintYouMessage;
 
-    blockCreateChat.textButton.textContent = textCreateChat;
-    blockCreateChat.inputNameChat.placeholder = textPlaceholderPressNameChat;
-    blockCreateChat.inputPassword.placeholder = textPlaceholderPressPasswordForChat;
-    blockCreateChat.buttonToCreate.textContent = textTryCreateChat;
+    //blockCreateChat.textButton.textContent = textCreateChat;
+    //blockCreateChat.inputNameChat.placeholder = textPlaceholderPressNameChat;
+    //blockCreateChat.inputPassword.placeholder = textPlaceholderPressPasswordForChat;
+    //blockCreateChat.buttonToCreate.textContent = textTryCreateChat;
 
-    blockListChats.textButtonOpenList.textContent = textOpenList;
-    blockListChats.inputSearch.placeholder = textPlaceholderSearchChat;
+    //blockListChats.textButtonOpenList.textContent = textOpenList;
+    //blockListChats.inputSearch.placeholder = textPlaceholderSearchChat;
 }
 
 function connectToServer() {
@@ -185,73 +185,73 @@ blockAuthorization.input.addEventListener('keypress', (event) => { // Делае
     }
 });
 
-blockChat.input.addEventListener('keypress', (event) => { // Считываем сообщении при нажатия Enter
-    if (event.key === 'Enter') {
-        if (blockChat.input.value != '') {
-            sendMessage(blockChat.input.value);
-            blockChat.input.value = '';
-        }
-    }
-});
+// blockChat.input.addEventListener('keypress', (event) => { // Считываем сообщении при нажатия Enter
+//     if (event.key === 'Enter') {
+//         if (blockChat.input.value != '') {
+//             sendMessage(blockChat.input.value);
+//             blockChat.input.value = '';
+//         }
+//     }
+// });
 
-blockChat.buttonToMainChat.addEventListener('click', () => { // При клике отправляем запрос на подключение к главному чату
-    console.log('Click to join global chat');
-    sendRequestJoinToGlobalChat();
-});
+//blockChat.buttonToMainChat.addEventListener('click', () => { // При клике отправляем запрос на подключение к главному чату
+//    console.log('Click to join global chat');
+//    sendRequestJoinToGlobalChat();
+//});
 
-blockCreateChat.button.addEventListener('click', () => { // Открыть закрыть инпуты для создания чата
-    blockCreateChat.blockInput.classList.toggle('hide');
-});
+//blockCreateChat.button.addEventListener('click', () => { // Открыть закрыть инпуты для создания чата
+//    blockCreateChat.blockInput.classList.toggle('hide');
+//});
 
-blockCreateChat.buttonToCreate.addEventListener('click', () => { // Отправляем запрос на создание чата
-    sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
-});
+//blockCreateChat.buttonToCreate.addEventListener('click', () => { // Отправляем запрос на создание чата
+//    sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
+//});
 
-blockCreateChat.inputNameChat.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
-    if (event.key === 'Enter') {
-        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
-    }
-});
+//blockCreateChat.inputNameChat.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
+//    if (event.key === 'Enter') {
+//        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
+//    }
+//});
 
-blockCreateChat.inputPassword.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
-    if (event.key === 'Enter') {
-        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
-    }
-});
+//blockCreateChat.inputPassword.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
+//    if (event.key === 'Enter') {
+//        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
+//    }
+//});
 
-blockListChats.buttonOpenList.addEventListener('click', () => { // Открыть закрыть чаты
+//blockListChats.buttonOpenList.addEventListener('click', () => { // Открыть закрыть чаты
 
-    if (blockListChats.blockList.classList.contains('hide')) {
-        blockListChats.blockList.classList.remove('hide');
-        console.log('chat list open');
-        sendRequestGetListChat();
-    } else {
-        closeChatList();
-    }
+//    if (blockListChats.blockList.classList.contains('hide')) {
+//        blockListChats.blockList.classList.remove('hide');
+//        console.log('chat list open');
+//        sendRequestGetListChat();
+//    } else {
+//        closeChatList();
+//    }
 
-});
+//});
 
-blockListChats.inputSearch.addEventListener('input', () => { // При вводе текста ищем чат соотвествующий вводу
-    const value = blockListChats.inputSearch.value;
-    const length = value.length;
+// blockListChats.inputSearch.addEventListener('input', () => { // При вводе текста ищем чат соотвествующий вводу
+//     const value = blockListChats.inputSearch.value;
+//     const length = value.length;
 
-    const list = blockListChats.list;
+//     const list = blockListChats.list;
 
-    for (let i = 0; i < list.children.length; i++) { // Проходимся по каждому элемента списка
-        const element = list.children[i]; // Сохраняем элемент в переменную
-        let nameChat = element.getAttribute('data-name-chat'); // Узнаем значение атрибута названия чата
-        nameChat = nameChat.substring(0, length);
-        if (nameChat.toLowerCase() !== value.toLowerCase()) {
-            console.log('Not Fit item ->')
-            console.log(element);
-            element.classList.add('hide');
-        } else {
-            console.log('Fit item ->');
-            console.log(element);
-            element.classList.remove('hide');
-        }
-    }
-});
+//     for (let i = 0; i < list.children.length; i++) { // Проходимся по каждому элемента списка
+//         const element = list.children[i]; // Сохраняем элемент в переменную
+//         let nameChat = element.getAttribute('data-name-chat'); // Узнаем значение атрибута названия чата
+//         nameChat = nameChat.substring(0, length);
+//         if (nameChat.toLowerCase() !== value.toLowerCase()) {
+//             console.log('Not Fit item ->')
+//             console.log(element);
+//             element.classList.add('hide');
+//         } else {
+//             console.log('Fit item ->');
+//             console.log(element);
+//             element.classList.remove('hide');
+//         }
+//     }
+// });
 
 function isCorrectNickname(nickname) { // Проверяем ник что бы он состоял от 3 до 20 символов и не должен иметь пробелов
     return nickname.length > 3 && nickname.length <= 20 && !nickname.includes(' ');
@@ -480,8 +480,7 @@ function authorization(response) { // Авторизация
 
             blockAuthorization.input.value = '';
             blockAuthorization.block.classList.add('hide');
-            blockCreateChat.block.classList.remove('hide');
-            blockListChats.block.classList.remove('hide');
+            //blockListChats.block.classList.remove('hide');
             blockChat.block.classList.remove('hide');
             blockAuthorization.error_info.textContent = '';
             centerBox.classList.add('hide'); // Скрываем коробку которая выравнивает по центру

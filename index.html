@@ -40,14 +40,14 @@
         </div>
 
         <div class="box-center">
-            <div class="ipAdress inputPuttingForward">
+            <div class="ipAdress">
                 <input class="ipAdress__input" id="ipInput" name="ipInput" type="text" required>
                 <label class="ipAdress__label" for="ipInput">
                     <span class="ipAdress__text"></span>
                 </label>
             </div>
             <div class="authorization hide">
-                <div class="authorization__block inputPuttingForward">
+                <div class="authorization__block">
                     <input class="authorization__input" id="nicknameInput" name="nicknameInput" type="text" required>
                     <label for="nicknameInput" class="authorization__label">
                         <span class="authorization__text"></span>
@@ -58,7 +58,33 @@
         </div>
 
         <div class="messager hide">
+
+            <div class="messager__otherFunction">
+                <div class="createChat hide">
+                    <button class="createChat__button">
+                        <span class="createChat__button__text"></span>
+                    </button>
+                    <div class="createChat__input hide">
+                        <input class="createChat__input__inputNameChat" type="text">
+                        <input class="createChat__input__inputPassword" type="password">
+                        <span class="createChat__textError"></span>
+                        <button class="createChat__buttonToCreate"></button>
+                    </div>
         
+                </div>
+                
+                <div class="listChats">
+                    <button class="listChats__buttonOpenList">
+                        <span class="listChats__buttonOpenList__text"></span>
+                    </button>
+                    <div class="listChats__list hide">
+                        <input class="listChats__list__inputSearchChat" type="text">
+                        <ul class="listChats__list__ul">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <div class="chat hide">
                 <div class="chat__name">
                     <span class="chat__nameText">${NameChat}</span>
@@ -77,31 +103,11 @@
         
         
         
-                <div class="createChat hide">
-                    <button class="createChat__button">
-                        <span class="createChat__button__text"></span>
-                    </button>
-                    <div class="createChat__input hide">
-                        <input class="createChat__input__inputNameChat" type="text">
-                        <input class="createChat__input__inputPassword" type="password">
-                        <span class="createChat__textError"></span>
-                        <button class="createChat__buttonToCreate"></button>
-                    </div>
-        
-                </div>
+                
         
         
         
-                <div class="listChats">
-                    <button class="listChats__buttonOpenList">
-                        <span class="listChats__buttonOpenList__text"></span>
-                    </button>
-                    <div class="listChats__list hide">
-                        <input class="listChats__list__inputSearchChat" type="text">
-                        <ul class="listChats__list__ul">
-                        </ul>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

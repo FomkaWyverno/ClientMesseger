@@ -3,7 +3,61 @@
     justify-content: center;
     align-items: center;
 
+    flex-grow: 1;
+
     width: 100%;
     height: 100%;
+
+    & input {
+        width: 600px;
+
+        border: none;
+        border-bottom: 4px #B4B4B4 solid;
+
+        font-size: 50px;
+
+        color: #b4b4b4;
+
+        transition: .5s ease;
+        &:focus {
+            border-color: transparent;
+            box-shadow: 0px 15px #08b83c;
+        }
+    }
+
+    & label {
+        position: absolute;
+        left: 15px;
+        bottom: 3px;
+
+        font-size: 30px;
+        color: #3d3d3d;
+        transition: 1s ease;
+    }
 }
 
+.ipAdress {
+    position: relative;
+
+    &__input {
+        &:focus {
+            @include inputLabelAuthFocus;
+        }
+        &:valid {
+            @include inputLabelAuthValid;
+        }
+    }
+}
+
+.authorization {
+    position: relative;
+    
+    &__input {
+        &:focus {
+            @include inputLabelAuthFocus;
+        }
+        &:valid {
+            @include inputLabelAuthValid;
+        }
+    }
+}

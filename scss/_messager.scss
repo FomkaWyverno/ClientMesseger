@@ -53,11 +53,15 @@
         overflow-y: auto;
         overflow-x: hidden;
         
+        margin-bottom: 20px;
 
         &__message {
             background-color: #DD901D;
             padding: 16px;
             border-radius: 25px;
+
+            min-width: 300px;
+            max-width: 700px;
             width: fit-content;
 
             font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -73,10 +77,27 @@
 
             &__text {
                 display: block;
-                width: 700px;
                 font-size: 50px;
                 overflow-wrap: anywhere;
                 color: #fff;
+            }
+        }
+
+        &::-webkit-scrollbar {
+            width: 15px;
+            background-color: #979797;
+            border-radius: 25px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            width: 15px;
+            background-color: #dddddd;
+            border-radius: 25px;
+
+            transition: .5s ease;
+
+            &:hover {
+                background-color: #fff;
             }
         }
     }

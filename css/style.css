@@ -269,12 +269,15 @@ td {
   height: 1px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-bottom: 20px;
 }
 
 .chat__messages__message {
   background-color: #DD901D;
   padding: 16px;
   border-radius: 25px;
+  min-width: 300px;
+  max-width: 700px;
   width: fit-content;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   margin-top: 20px;
@@ -289,10 +292,26 @@ td {
 
 .chat__messages__message__text {
   display: block;
-  width: 700px;
   font-size: 50px;
   overflow-wrap: anywhere;
   color: #fff;
+}
+
+.chat__messages::-webkit-scrollbar {
+  width: 15px;
+  background-color: #979797;
+  border-radius: 25px;
+}
+
+.chat__messages::-webkit-scrollbar-thumb {
+  width: 15px;
+  background-color: #dddddd;
+  border-radius: 25px;
+  transition: .5s ease;
+}
+
+.chat__messages::-webkit-scrollbar-thumb:hover {
+  background-color: #fff;
 }
 
 .chat__inputBlock {

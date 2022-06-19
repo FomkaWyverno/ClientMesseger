@@ -15,3 +15,23 @@
         bottom: 60px;
     }
 }
+
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 15px;
+        background-color: #979797;
+        border-radius: 25px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 15px;
+        background-color: #dddddd;
+        border-radius: 25px;
+
+        transition: .5s ease;
+
+        &:hover {
+            background-color: #fff;
+        }
+    }
+}

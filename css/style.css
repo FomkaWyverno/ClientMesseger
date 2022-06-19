@@ -1,3 +1,157 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100vh;
+  background-color: #141414;
+  margin: 0;
+  font-family: 'Questrial', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+}
+
+main {
+  height: 100%;
+}
+
+span {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+button, input, textarea {
+  font: inherit;
+  background-color: transparent;
+  border: 2px solid;
+  border-color: #ffffff;
+  outline: 0;
+  color: #ffffff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+h1, h2, h3, p, ul, ol {
+  padding: 0;
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th {
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+td {
+  text-align: center;
+  padding: 0;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+}
+
+.App__controlWindow {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  background-color: #222222;
+}
+
+.App__nameBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 7.2px;
+}
+
+.App__nameBox__name {
+  font-size: 21.6px;
+  color: #fff;
+}
+
+.App__toolControl {
+  display: flex;
+}
+
+.App__toolControl__box {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  transition: .3s ease;
+}
+
+.App__toolControl__icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.App__toolControl__hide {
+  background: url("/assets/control-window/hide-icon.svg") no-repeat;
+}
+
+.App__toolControl__expand {
+  background: url("/assets/control-window/expand-icon.svg") no-repeat;
+}
+
+.App__toolControl__no-expand {
+  background: url("/assets/control-window/no-expand-icon.svg") no-repeat;
+}
+
+.App__toolControl__close {
+  background: url("/assets/control-window/close-icon.svg") no-repeat;
+}
+
+.App__toolControl__hideBox:hover {
+  background-color: #B58304;
+}
+
+.App__toolControl__expandBox:hover {
+  background-color: #0B7AB9;
+}
+
+.App__toolControl__closeBox:hover {
+  background-color: #EB1818;
+}
+
+.box-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
 .hide {
   display: none;
 }

@@ -6,62 +6,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messeger</title>
     <script src="scripts/script.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="ipAdress">
-        <span class="ipAdress__text"></span>
-        <input class="ipAdress__input">
-    </div>
-    <div class="messager hide">
-        <div class="authorization hide">
-            <div class="authorization__block">
-                <span class="authorization__text"></span>
-                <input class="authorization__input">
-                <span class="authorization__error"></span>
-            </div>
-        </div>
-        <div class="chat hide">
-            <div class="chat__name">
-                <span class="chat__nameText"></span>
-            </div>
-            <div class="chat__messages">
-            </div>
-            <div>
-                <input class="chat__input">
-                <button class="chat__connectToMainChat hide"></button>
-            </div>
+    <div class="App">
 
+        <div class="App__controlWindow">
 
-
-            <div class="createChat hide">
-                <button class="createChat__button">
-                    <span class="createChat__button__text"></span>
-                </button>
-                <div class="createChat__input hide">
-                    <input class="createChat__input__inputNameChat" type="text">
-                    <input class="createChat__input__inputPassword" type="password">
-                    <span class="createChat__textError"></span>
-                    <button class="createChat__buttonToCreate"></button>
-                </div>
+            <div class="App__nameBox">
+                <span class="App__nameBox__name">Wyverno-Messager</span>
+            </div>
             
+            <div class="App__toolControl">
+
+                <div class="App__toolControl__hideBox App__toolControl__box">
+                    <span class="App__toolControl__hide App__toolControl__icon"></span>
+                </div>
+
+                <div class="App__toolControl__expandBox App__toolControl__box">
+                    <span class="App__toolControl__expand App__toolControl__icon"></span>
+                </div>
+
+                <div class="App__toolControl__closeBox App__toolControl__box">
+                    <span class="App__toolControl__close App__toolControl__icon"></span>
+                </div>
+
             </div>
+        </div>
 
-
-
-            <div class="listChats hide">
-                <button class="listChats__buttonOpenList">
-                    <span class="listChats__buttonOpenList__text"></span>
-                </button>
-                <div class="listChats__list hide">
-                    <input class="listChats__list__inputSearchChat" type="text">
-                    <ul class="listChats__list__ul">
-                    </ul>
+        <div class="box-center">
+            <div class="ipAdress inputPuttingForward">
+                <input class="ipAdress__input" id="ipInput" name="ipInput" type="text" required>
+                <label class="ipAdress__label" for="ipInput">
+                    <span class="ipAdress__text"></span>
+                </label>
+            </div>
+            <div class="authorization hide">
+                <div class="authorization__block inputPuttingForward">
+                    <input class="authorization__input" id="nicknameInput" name="nicknameInput" type="text" required>
+                    <label for="nicknameInput" class="authorization__label">
+                        <span class="authorization__text"></span>
+                    </label>
+                    <span class="authorization__error"></span>
                 </div>
             </div>
         </div>
+
+        <div class="messager hide">
         
+            <div class="chat hide">
+                <div class="chat__name">
+                    <span class="chat__nameText">${NameChat}</span>
+                </div>
+                <div class="chat__messages">
+                </div>
+                <div class="chat__inputBlock">
+                    <button class="chat__buttonSend">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <image x="0" y="0" width="100%" height="100%" href="/assets/chat/sendIcon.svg"></image>
+                        </svg>
+                    </button>
+                    <input class="chat__input">
+                    <button class="chat__connectToMainChat hide"></button>
+                </div>
+        
+        
+        
+                <div class="createChat hide">
+                    <button class="createChat__button">
+                        <span class="createChat__button__text"></span>
+                    </button>
+                    <div class="createChat__input hide">
+                        <input class="createChat__input__inputNameChat" type="text">
+                        <input class="createChat__input__inputPassword" type="password">
+                        <span class="createChat__textError"></span>
+                        <button class="createChat__buttonToCreate"></button>
+                    </div>
+        
+                </div>
+        
+        
+        
+                <div class="listChats">
+                    <button class="listChats__buttonOpenList">
+                        <span class="listChats__buttonOpenList__text"></span>
+                    </button>
+                    <div class="listChats__list hide">
+                        <input class="listChats__list__inputSearchChat" type="text">
+                        <ul class="listChats__list__ul">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
     
 </body>
 </html>

@@ -1,0 +1,71 @@
+.App {
+
+    width: 100%;
+    height: 100%;
+
+    &__controlWindow {
+        display: flex;
+        justify-content: space-between;
+
+        height: 30px;
+        background-color: #222222;
+    }
+
+    &__nameBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 7.2px;
+        &__name {
+            font-size: 21.6px;
+            color: #fff;
+        }
+    }
+
+    &__toolControl {
+        display: flex;
+        &__box {
+            display: flex;
+            width: 30px;
+            height: 30px;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            transition: .3s ease;
+        }
+
+        &__icon {
+            display: block;
+            width: 18px;
+            height: 18px;
+        }
+
+        &__hide {   
+            background: url("/assets/control-window/hide-icon.svg") no-repeat;
+        }
+
+        &__expand {
+            background: url("/assets/control-window/expand-icon.svg") no-repeat;
+        }
+
+        &__no-expand {
+            background: url("/assets/control-window/no-expand-icon.svg") no-repeat;
+        }
+
+        &__close {
+            background: url("/assets/control-window/close-icon.svg") no-repeat;
+        }
+
+        &__hideBox:hover {
+           background-color: #B58304;
+        }
+
+        &__expandBox:hover {
+            background-color: #0B7AB9;
+        }
+        
+        &__closeBox:hover {
+            background-color: #EB1818;
+        }
+    }
+}

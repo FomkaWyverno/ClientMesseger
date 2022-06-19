@@ -1,3 +1,4 @@
+//const centerBox = document.querySelector('.centerBox'); // Импортируем коробку которая выравнивает по центру
 const messagerBlock = document.querySelector('.messager'); // Импортируем блок мессенджера
 
 const blockIPAdress = { // Блок с запросом айпи адресса
@@ -96,7 +97,6 @@ function connectToServer() {
     socket.onopen = () => { // Мы получили соединение с сервером 
         blockIPAdress.block.classList.add('hide'); // Скрываем блок с вводом IP
         blockAuthorization.block.classList.remove('hide'); // Показываем блок с авторизацией
-        messagerBlock.classList.remove('hide'); // Включаем внутриность мессенджера
     };
 
     socket.onmessage = (event) => { // Обработка сообщений от сервера
@@ -484,6 +484,8 @@ function authorization(response) { // Авторизация
             blockListChats.block.classList.remove('hide');
             blockChat.block.classList.remove('hide');
             blockAuthorization.error_info.textContent = '';
+            //centerBox.classList.add('hide'); // Скрываем коробку которая выравнивает по центру
+            messagerBlock.classList.remove('hide'); // Включаем внутриность мессенджера
 
             break;
         }
@@ -605,6 +607,8 @@ function disconnectServer() { // Функция отключение от сер
 }
 
 function resetHideClasses() { // Установить класс "hide" всем элементам которые имеют его изначально
+    //centerBox.classList.remove('hide'); // Открываем бокс для центра
+    
     messagerBlock.classList.add('hide'); // Скрываем месенджер
 
     blockChat.block.classList.add('hide'); // Скрываем блок чата

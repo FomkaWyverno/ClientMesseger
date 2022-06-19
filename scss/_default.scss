@@ -1,0 +1,77 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+
+body {
+
+    height: 100vh;
+    background-color: #141414;
+    margin: 0;
+    font-family: 'Questrial', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+}
+
+main {
+    height: 100%;
+}
+
+span {
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+button, input, textarea {
+    font: inherit;
+    background-color: transparent;
+    border: 2px solid;
+    border-color: #ffffff;
+    outline: 0;
+    color: #ffffff;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+ul, ol {
+    list-style: none;
+}
+
+h1, h2, h3, p, ul, ol {
+    padding: 0;
+    margin: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+th {
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+td {
+    text-align: center;
+    padding: 0;
+}   

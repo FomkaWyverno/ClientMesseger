@@ -63,8 +63,10 @@ const textPlaceholderSearchChat = 'Введите чат...';
 const textPlaceholderPrintYouMessage = 'Введите ваше сообщение...';
 const textTryCreateChat = 'Создать!';
 const textCreateChatErrorChatIsExists = 'Чат с таким именим существует!';
+const textSelfMessage = 'Вы'; 
 
 let socket;
+let clientUID;
 
 blockIPAdress.input.addEventListener('keypress', (event) => { // Ивент для ввода айпи.
     if (event.key === 'Enter') { // Если пользователь нажал ETNER
@@ -293,6 +295,9 @@ function receivedElementsChat(data) { // Добавляем сообщения �
 function receivedMessage(data) { // Добавляем блок сообщения в чате
 
     const blockMessage = document.createElement('div');
+
+    
+
     blockMessage.classList.add('chat__messages__message');
     blockMessage.id = `element:${data.id}`;
 
@@ -303,8 +308,15 @@ function receivedMessage(data) { // Добавляем блок сообщени
 
     blockMessage.appendChild(blockNickname);
     blockMessage.appendChild(blockText);
-    blockNickname.textContent = `${data.nickname}: `;
+    
     blockText.textContent = data.message;
+
+    if (data.client.uid === clientUID) {
+        blockMessage.classList.add('chat__messages__message--self');
+        blockNickname.textContent = `${textSelfMessage}:`;
+    } else {
+        blockNickname.textContent = `${data.client.nickname}:`;
+    }
 
     blockChat.messages.appendChild(blockMessage);
 
@@ -321,9 +333,9 @@ function receivedJoinUserToChat(data) { // Добавляем блок прис�
     const blockConnect = document.createElement('div');
     blockConnect.classList.add('chat__connect');
     blockConnect.id = `element:${data.id}`;
-    console.log(`Element: ${data.name}`);
+    console.log(`Element: ${data.client.nickname}`);
     const span = document.createElement('span');
-    span.textContent = `${data.name} ${textJoinUserToChat}`;
+    span.textContent = `${data.client.nickname} ${textJoinUserToChat}`;
     blockConnect.appendChild(span);
     blockChat.messages.appendChild(blockConnect);
 }
@@ -337,9 +349,9 @@ function receivedLeaveUserFromChat(data) { // Добавляем блок о о�
     const blockConnect = document.createElement('div');
     blockConnect.classList.add('chat__disconnect');
     blockConnect.id = `element:${data.id}`;
-    console.log(`Element: ${data.name}`);
+    console.log(`Element: ${data.client.nickname}`);
     const span = document.createElement('span');
-    span.textContent = `${data.name} ${textLeaveUserFromChat}`;
+    span.textContent = `${data.client.nickname} ${textLeaveUserFromChat}`;
     blockConnect.appendChild(span);
     blockChat.messages.appendChild(blockConnect);
 }
@@ -486,6 +498,10 @@ function authorization(response) { // Авторизация
     switch (response.code) {
         case 0: { // Если все отлично от скрываем блок ввода имени и открываем чат
 
+            const client = JSON.parse(response.data);
+
+            clientUID = client.uid;
+
             blockAuthorization.input.value = '';
             blockAuthorization.block.classList.add('hide');
             //blockListChats.block.classList.remove('hide');
@@ -621,9 +637,9 @@ function resetHideClasses() { // Установить класс "hide" всем
     blockChat.block.classList.add('hide'); // Скрываем блок чата
     blockAuthorization.block.classList.add('hide'); // Скрываем блок авторизации
     blockChat.block.classList.add('hide'); // Скрываем чат
-    blockChat.buttonToMainChat.classList.add('hide'); // Скрываем кнопку выхода в глобальный чат
+    //blockChat.buttonToMainChat.classList.add('hide'); // Скрываем кнопку выхода в глобальный чат
 
-    blockCreateChat.block.classList.add('hide'); // Скрыть создание чата
+    //blockCreateChat.block.classList.add('hide'); // Скрыть создание чата
     blockCreateChat.blockInput.classList.add('hide'); // Скрыть инпуты у создания чата
 
     blockListChats.block.classList.add('hide'); // Скрыть блок списка чатов

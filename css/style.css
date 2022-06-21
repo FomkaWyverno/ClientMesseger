@@ -266,6 +266,7 @@ td {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1 1 auto;
+  scroll-behavior: smooth;
 }
 
 .messager__scroller::-webkit-scrollbar {

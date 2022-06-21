@@ -48,6 +48,7 @@
         overflow-x: hidden;
         flex: 1 1 auto;
 
+        scroll-behavior: smooth;
         @include scrollbar;
     }
 }

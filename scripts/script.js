@@ -21,7 +21,8 @@ const blockChat = { // Блок чата
     nameBlock : document.querySelector('.chat__name'),
     nameSpan : document.querySelector('.chat__nameText'),
     //buttonToMainChat : document.querySelector('.chat__connectToMainChat'),
-    buttonToSend : document.querySelector('.chat__inputBlock__container__buttonSend')
+    buttonToSend : document.querySelector('.chat__inputBlock__container__buttonSend'),
+    scroller : document.querySelector('.messager__scroller')
 }
 
 const blockCreateChat = { // Блок создания чата
@@ -113,19 +114,19 @@ function connectToServer() {
             case 'message' : { // Тип сообщение от сервера пришло сообщение
                 const data = JSON.parse(response.data); // Парсим данные которые пришли нам
                 console.log(data);
-                receivedMessage(data); // Вызываем функцию отображение в UI сообщения
+                receivedMessage(data).scrollIntoView(); // Вызываем функцию отображение в UI сообщения
                 break;
             }
             case 'joinToChat' : {
                 const data = response.data;
                 console.log(data);
-                receivedJoinUserToChat(data);
+                receivedJoinUserToChat(data).scrollIntoView();
                 break;
             }
             case 'leaveFromChat' : {
                 const data = response.data;
                 console.log(data);
-                receivedLeaveUserFromChat(data);
+                receivedLeaveUserFromChat(data).scrollIntoView();
                 break;
             }
             case 'listElementChat' : {
@@ -275,21 +276,27 @@ function receivedElementsChat(data) { // Добавляем сообщения �
     const list = JSON.parse(data);
     console.log(`Function receivedElementsChats list ->`);
     console.log(list);
+
+    let lastElement;
     list.slice().reverse().forEach((element) => {
         switch (element.elementName) {
             case 'ConnectDisconnectElement': { // Элемент подключение/отключение от чата
                 if (element.connect) { // Элемент подключение
-                    receivedJoinUserToChat(element);
+                    lastElement = receivedJoinUserToChat(element);
                 } else { // Элемент отключения
-                    receivedLeaveUserFromChat(element);
+                    lastElement = receivedLeaveUserFromChat(element);
                 }
                 break;
             }
             case 'Message': { // Элемент сообщения
-                receivedMessage(element); // Добавляем блок сообщения
+                lastElement = receivedMessage(element); // Добавляем блок сообщения
             }
         }
     });
+    
+    setTimeout(()=>{lastElement.scrollIntoView();},1); // Таймаут нужен для того что бы успел загрузится наш элемент к которому скролимся
+    
+    
 }
 
 function receivedMessage(data) { // Добавляем блок сообщения в чате
@@ -320,6 +327,8 @@ function receivedMessage(data) { // Добавляем блок сообщени
 
     blockChat.messages.appendChild(blockMessage);
 
+    return blockMessage;
+
 }
 
 function receivedJoinUserToChat(data) { // Добавляем блок присоединение пользователя
@@ -338,6 +347,8 @@ function receivedJoinUserToChat(data) { // Добавляем блок прис�
     span.textContent = `${data.client.nickname} ${textJoinUserToChat}`;
     blockConnect.appendChild(span);
     blockChat.messages.appendChild(blockConnect);
+
+    return blockConnect;
 }
 
 function receivedLeaveUserFromChat(data) { // Добавляем блок о отключение пользователя
@@ -354,6 +365,8 @@ function receivedLeaveUserFromChat(data) { // Добавляем блок о о�
     span.textContent = `${data.client.nickname} ${textLeaveUserFromChat}`;
     blockConnect.appendChild(span);
     blockChat.messages.appendChild(blockConnect);
+
+    return blockConnect;
 }
 
 function receivedDeleteElementChat(data) { // Функция удаление элемента из чата

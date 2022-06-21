@@ -27,6 +27,29 @@
             }
         }
     }
+
+    &__wrapper {
+        display: flex;
+        position: relative;
+        min-height: 0;
+        min-width: 0;
+        flex: 1 1 auto; 
+
+        margin-bottom: 20px;
+    }
+
+    &__scroller {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex: 1 1 auto;
+
+        @include scrollbar;
+    }
 }
 
 .chat {
@@ -47,13 +70,11 @@
     }
 
     &__messages {
-        flex-grow: 1;
-        height: 1px; // Нужен что бы скролинг работал
-        
-        overflow-y: auto;
-        overflow-x: hidden;
-        
-        margin-bottom: 20px;
+        display: flex;
+
+        justify-content: flex-end;
+        flex-direction: column;
+        min-height: 100%;
 
         &__message {
             background-color: #DD901D;
@@ -88,8 +109,6 @@
                 margin-right: 5px;
             }
         }
-
-        @include scrollbar;
     }
 
     &__inputBlock {

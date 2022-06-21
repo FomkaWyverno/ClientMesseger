@@ -294,7 +294,7 @@ function receivedElementsChat(data) { // Добавляем сообщения �
 
 function receivedMessage(data) { // Добавляем блок сообщения в чате
 
-    const blockMessage = document.createElement('div');
+    const blockMessage = document.createElement('li');
 
     
 
@@ -330,7 +330,7 @@ function receivedJoinUserToChat(data) { // Добавляем блок прис�
 
 
 
-    const blockConnect = document.createElement('div');
+    const blockConnect = document.createElement('li');
     blockConnect.classList.add('chat__connect');
     blockConnect.id = `element:${data.id}`;
     console.log(`Element: ${data.client.nickname}`);
@@ -346,7 +346,7 @@ function receivedLeaveUserFromChat(data) { // Добавляем блок о о�
         data = JSON.parse(data);
     }
 
-    const blockConnect = document.createElement('div');
+    const blockConnect = document.createElement('li');
     blockConnect.classList.add('chat__disconnect');
     blockConnect.id = `element:${data.id}`;
     console.log(`Element: ${data.client.nickname}`);

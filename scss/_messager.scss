@@ -77,6 +77,14 @@
         flex-direction: column;
         min-height: 100%;
 
+        & li:not(:first-child) {
+            margin-top: 20px;
+        }
+
+        & li:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
         &__message {
             background-color: #DD901D;
             padding: 16px;
@@ -88,7 +96,6 @@
 
             font-family: 'Yanone Kaffeesatz', sans-serif;
 
-            margin-top: 20px;
             margin-bottom: 20px;
 
             &__nickname {
@@ -106,8 +113,55 @@
 
             &--self {
                 background-color: #92B0FF;
-                margin-left: auto;
+                align-self: flex-end;
                 margin-right: 5px;
+            }
+        }
+
+        &__networkBox {
+            display: flex;
+            flex-direction: row;
+
+            align-items: center;
+
+            border-radius: 25px;
+
+            padding: 30px 25px 30px;
+
+            min-width: 300px;
+
+            width: fit-content;
+            
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 36px;
+
+            &__icon {
+                display: block;
+                width: 75px;
+                height: 50px;
+            }
+            &__text {
+                margin-left: 10px;
+            }
+        }
+
+        &__connect {
+            background-color: #3CFE73;
+            &__icon {
+                background: url("/assets/chat/user-connect-icon.svg") no-repeat;
+            }
+            &__text {
+                color: #fff;
+            }
+        }
+
+        &__disconnect {
+            background-color: #C11F1F;
+            &__icon {
+                background: url("/assets/chat/user-disconnect-icon.svg") no-repeat;
+            }
+            &__text {
+                color: #000;
             }
         }
     }

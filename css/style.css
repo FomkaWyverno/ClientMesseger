@@ -309,6 +309,14 @@ td {
   min-height: 100%;
 }
 
+.chat__messages li:not(:first-child) {
+  margin-top: 20px;
+}
+
+.chat__messages li:not(:last-child) {
+  margin-bottom: 20px;
+}
+
 .chat__messages__message {
   background-color: #DD901D;
   padding: 16px;
@@ -317,7 +325,6 @@ td {
   max-width: 700px;
   width: fit-content;
   font-family: 'Yanone Kaffeesatz', sans-serif;
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -336,8 +343,54 @@ td {
 
 .chat__messages__message--self {
   background-color: #92B0FF;
-  margin-left: auto;
+  align-self: flex-end;
   margin-right: 5px;
+}
+
+.chat__messages__networkBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 25px;
+  padding: 30px 25px 30px;
+  min-width: 300px;
+  width: fit-content;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 36px;
+}
+
+.chat__messages__networkBox__icon {
+  display: block;
+  width: 75px;
+  height: 50px;
+}
+
+.chat__messages__networkBox__text {
+  margin-left: 10px;
+}
+
+.chat__messages__connect {
+  background-color: #3CFE73;
+}
+
+.chat__messages__connect__icon {
+  background: url("/assets/chat/user-connect-icon.svg") no-repeat;
+}
+
+.chat__messages__connect__text {
+  color: #fff;
+}
+
+.chat__messages__disconnect {
+  background-color: #C11F1F;
+}
+
+.chat__messages__disconnect__icon {
+  background: url("/assets/chat/user-disconnect-icon.svg") no-repeat;
+}
+
+.chat__messages__disconnect__text {
+  color: #000;
 }
 
 .chat__inputBlock {

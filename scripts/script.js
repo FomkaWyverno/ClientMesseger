@@ -50,8 +50,6 @@ const textInputIP = 'Введите адресс сервера';
 const textPressUsername = 'Введите никнейм';
 const textNicknameNotFree = 'Никнейм занят!';
 const textNotCorrectNick = 'Никнейм должен состоять от 3 до 20 символов и не должен иметь пробелов';
-const textJoinUserToChat = 'присоединился к чату.';
-const textLeaveUserFromChat = 'покинул чат.';
 const textBadPassword = 'Неверный пароль!';
 const textChatNoLongerExists = 'Чата больше не существует';
 const textPlaceholderPassworForChat = 'Введите пароль';
@@ -340,13 +338,25 @@ function receivedJoinUserToChat(data) { // Добавляем блок прис�
 
 
     const blockConnect = document.createElement('li');
-    blockConnect.classList.add('chat__connect');
+    blockConnect.classList.add('chat__messages__connect');
+    blockConnect.classList.add('chat__messages__networkBox');
     blockConnect.id = `element:${data.id}`;
     console.log(`Element: ${data.client.nickname}`);
+
+    const icon = document.createElement('span');
+    icon.classList.add('chat__messages__connect__icon');
+    icon.classList.add('chat__messages__networkBox__icon');
+
     const span = document.createElement('span');
-    span.textContent = `${data.client.nickname} ${textJoinUserToChat}`;
+    span.classList.add('chat__messages__connect__text');
+    span.classList.add('chat__messages__networkBox__text');
+    span.textContent = `${data.client.nickname}`;
+
+    blockConnect.appendChild(icon);
     blockConnect.appendChild(span);
     blockChat.messages.appendChild(blockConnect);
+
+    
 
     return blockConnect;
 }
@@ -358,11 +368,21 @@ function receivedLeaveUserFromChat(data) { // Добавляем блок о о�
     }
 
     const blockConnect = document.createElement('li');
-    blockConnect.classList.add('chat__disconnect');
+    blockConnect.classList.add('chat__messages__disconnect');
+    blockConnect.classList.add('chat__messages__networkBox');
     blockConnect.id = `element:${data.id}`;
     console.log(`Element: ${data.client.nickname}`);
+
+    const icon = document.createElement('span');
+    icon.classList.add('chat__messages__disconnect__icon');
+    icon.classList.add('chat__messages__networkBox__icon');
+
     const span = document.createElement('span');
-    span.textContent = `${data.client.nickname} ${textLeaveUserFromChat}`;
+    span.classList.add('chat__messages__disconnect__text');
+    span.classList.add('chat__messages__networkBox__text');
+    span.textContent = `${data.client.nickname}`;
+
+    blockConnect.appendChild(icon);
     blockConnect.appendChild(span);
     blockChat.messages.appendChild(blockConnect);
 

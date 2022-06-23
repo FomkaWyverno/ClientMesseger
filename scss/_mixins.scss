@@ -3,7 +3,7 @@
     color: #fff;
     &~label {
         left: 0px;
-        bottom: 60px;
+        top: -40px;
         font-size: 45px;
         color: #fff;
     }
@@ -12,7 +12,7 @@
 @mixin inputLabelAuthValid {
     &~label {
         left: 0px;
-        bottom: 60px;
+        top: -40px;
     }
 }
 

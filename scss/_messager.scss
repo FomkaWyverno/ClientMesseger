@@ -1,6 +1,7 @@
 .messager {
     display: flex;
-    
+    position: relative;
+
     flex-grow: 1;
 
     &__otherFunction {

@@ -1,0 +1,144 @@
+.window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    display: flex;
+    background-color: #000000a1;
+    backdrop-filter: blur(2px);
+
+    justify-content: center;
+    align-items: center;
+
+    &__wrapper {
+        background-color: #363636;
+        border-radius: 15px;
+
+        overflow: hidden;
+        &__controlPanel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 75px;
+
+            &__name {
+                color: #fff;
+                margin-left: 15px;
+                font-size: 36px;
+            }
+
+            &__close {
+                background: url("/assets/chat/window-close-icon.svg") no-repeat;
+                width: 30px;
+                height: 30px;
+                transition: .5s ease;
+                margin-right: 15px;
+                &:hover {
+                    filter: brightness(500%);
+                }
+            }
+        
+        }
+
+        &__content {
+            padding: 15px;
+            &__inputBlockSearch {
+                display: flex;
+                min-width: 500px;
+                height: 30px;
+                background-color: #767676;
+                border-radius: 5px;
+                
+                &__input {
+                    margin-left: 5px;
+                    width: 100%;
+                    height: 100%;
+                    border: 0;
+                    font-size: 26px;
+                    &::placeholder {
+                        color: #525252;
+                    }
+                }
+
+                &__icon {
+                    width: 30px;
+                    height: 30px;
+                    background: url("/assets/chat/search-icon.svg") no-repeat;
+                    margin-right: 5px;
+                }
+            }
+
+            &__listChat {
+                margin-top: 10px;
+
+                overflow: hidden auto;
+                @include scrollbar;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                max-height: 500px;
+
+                background-color: #474747;
+                border-radius: 10px;
+
+                padding: 10px 7px;
+
+                &__empty {
+                    font-size: 30px;
+                    color: #fff;
+                }
+
+                &__element {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    min-width: 600px;
+
+                    justify-content: space-between;
+                    align-items: center;
+
+                    background-color: #212121;
+                    border-radius: 10px;
+                    padding: 10px 7px;
+
+                    &:not(:last-child) {
+                        margin-bottom: 10px;
+                    }
+
+                    &__name {
+                        max-width: 250px;
+                        color: #fff;
+                        font-size: 30px;
+                        
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    &__button {
+                        position: relative;
+                        background-color: #fff;
+                        border: 0;
+                        border-radius: 5px;
+                        box-shadow: 3px 3px 4px #949494;
+                        transition: 1s ease;
+
+                        padding: 3px;
+                        color: #000;
+                        font-weight: 600;
+                        font-size: 36px;
+
+                        &:hover {
+                            top: 2px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}

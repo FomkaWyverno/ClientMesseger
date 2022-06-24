@@ -220,7 +220,11 @@
     box-shadow: 5px 5px 4px #949494;
                     
     &:hover {
-        top: 3px;
+        background-color: #fff;
+    }
+    
+    &:active {
         left: 3px;
-    }                
+        top: 3px;
+    }
 }

@@ -668,8 +668,12 @@ td {
 }
 
 .windowButtonLight:hover {
-  top: 3px;
+  background-color: #fff;
+}
+
+.windowButtonLight:active {
   left: 3px;
+  top: 3px;
 }
 
 .hide {

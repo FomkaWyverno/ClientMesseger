@@ -96,6 +96,7 @@
         }
 
         &__message {
+            position: relative;
             background-color: #DD901D;
             padding: 16px;
             border-radius: 25px;
@@ -107,6 +108,8 @@
             font-family: 'Yanone Kaffeesatz', sans-serif;
 
             margin-bottom: 20px;
+
+            animation: animateMessage 1s 1 ease forwards;
 
             &__nickname {
                 display: block;
@@ -125,6 +128,8 @@
                 background-color: #92B0FF;
                 align-self: flex-end;
                 margin-right: 5px;
+
+                animation: animateSelfMessage 1s 1 ease forwards;
             }
         }
 
@@ -220,3 +225,23 @@
     }
 }
 
+
+
+
+@keyframes animateMessage {
+    0% {
+        right: 300px;
+    }
+    100% {
+        right: 0px;
+    }
+}
+
+@keyframes animateSelfMessage {
+    0% {
+        left: 300px;
+    }
+    100% {
+        left: 0px
+    }
+}

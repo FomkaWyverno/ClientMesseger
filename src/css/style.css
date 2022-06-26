@@ -337,6 +337,7 @@ td {
 }
 
 .chat__messages__message {
+  position: relative;
   background-color: #DD901D;
   padding: 16px;
   border-radius: 25px;
@@ -345,6 +346,7 @@ td {
   width: fit-content;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   margin-bottom: 20px;
+  animation: animateMessage 1s 1 ease forwards;
 }
 
 .chat__messages__message__nickname {
@@ -364,6 +366,7 @@ td {
   background-color: #92B0FF;
   align-self: flex-end;
   margin-right: 5px;
+  animation: animateSelfMessage 1s 1 ease forwards;
 }
 
 .chat__messages__networkBox {
@@ -450,6 +453,24 @@ td {
 
 .chat__inputBlock__container__buttonSend:hover {
   filter: brightness(2);
+}
+
+@keyframes animateMessage {
+  0% {
+    right: 300px;
+  }
+  100% {
+    right: 0px;
+  }
+}
+
+@keyframes animateSelfMessage {
+  0% {
+    left: 300px;
+  }
+  100% {
+    left: 0px;
+  }
 }
 
 .window {
@@ -733,5 +754,17 @@ td {
 
 .hide {
   display: none;
+}
+
+.noselectText {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  /* Safari */
+  /* Konqueror HTML */
+  /* Old versions of Firefox */
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
 }
 /*# sourceMappingURL=style.css.map */

@@ -636,8 +636,10 @@ function gotChatList(response) { // Получение списка
 
             const button = document.createElement('button'); // Создаем кнопку
             button.classList.add('window__wrapper__content__listChat__element__button'); // Добавляем класс для кнопки
+            button.classList.add('noselectText');
             //button.id = `buttonConnectToChat:${chat.id}`; // Добавляем айди для кнопки
             button.textContent = textButtonConnectToPrivateChat; // Устанавливаем описание кнопки
+            
 
             li.appendChild(span);
             li.appendChild(button);

@@ -35,6 +35,9 @@
                 height: 30px;
                 transition: .5s ease;
                 margin-right: 15px;
+                
+                cursor: pointer;
+
                 &:hover {
                     filter: brightness(500%);
                 }
@@ -133,6 +136,8 @@
                         font-weight: 600;
                         font-size: 36px;
 
+                        cursor: pointer;
+
                         &:hover {
                             background-color: #fff;
                         }
@@ -184,17 +189,34 @@
                 justify-content: center;
                 align-items: center;
 
+
                 &__inputBlockChatName {
                     margin-bottom: 15px;
+
+                    &__input {
+                        color: #363636;
+                    }
+
                     &__icon {
                         background: url("/assets/chat/chat-icon.svg") no-repeat;
                     }
                 }
                 &__inputBlockChatPassword {
                     margin-bottom: 15px;
+
+                    &__input {
+                        color: #363636;
+                    }
+
                     &__icon {
                         background: url("/assets/chat/lock-icon.svg") no-repeat;
                     }
+                }
+
+                &__chatNameError {
+                    font-size: 26px;
+                    color: #c11f1f;
+                    margin-bottom: 15px;
                 }
             }
         }
@@ -203,15 +225,18 @@
 
 .windowInputBlockLight {
     display: flex;
-    width: 400px;
+    min-width: 400px;
+    width: 100%;
     background-color: #D9D9D9;
     border-radius: 12.5px;
 
     input {
-        width: 350px;
+        width: 100%;
+        min-width: 350px;
         border: 0;
         padding: 0;
         
+        padding-right: 15px;
         font-size: 36px;
         
 
@@ -239,6 +264,8 @@
     background-color: #D9D9D9;
     color: #000;
     box-shadow: 5px 5px 4px #949494;
+
+    cursor: pointer;
                     
     &:hover {
         background-color: #fff;
@@ -250,6 +277,6 @@
     }
 }
 
-.badPasswordPlaceholder::placeholder {
+.badAnyPlaceholder::placeholder {
     color: #c11f1f;
 }

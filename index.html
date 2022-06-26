@@ -116,6 +116,7 @@
                                     <div class="window__wrapper__content__createChat__inputBlockChatName__icon iconWindowForInput"></div>
                                     <input type="text" class="window__wrapper__content__createChat__inputBlockChatName__input" placeholder="Введите имя чата...">
                                 </div>
+                                <span class="window__wrapper__content__createChat__chatNameError hide">Error</span>
                                 <div class="window__wrapper__content__createChat__inputBlockChatPassword windowInputBlockLight">
                                     <div class="window__wrapper__content__createChat__inputBlockChatPassword__icon iconWindowForInput"></div>
                                     <input type="password" class="window__wrapper__content__createChat__inputBlockChatPassword__input" placeholder="Введите пароль (необезательно)">
@@ -127,10 +128,10 @@
                 </div>
                 
             </div>
-
             <div class="chat hide">
                 <div class="chat__name">
                     <span class="chat__nameText">${NameChat}</span>
+                    <span class="chat__error"></span>
                 </div>
                 <div class="messager__wrapper">
                     <div class="messager__scroller">

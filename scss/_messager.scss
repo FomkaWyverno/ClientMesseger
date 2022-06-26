@@ -65,10 +65,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+    }
 
+    &__nameText {
         color: #fff;
         font-size: 96px;
         padding: 10px;
+    }
+
+    &__error {
+        font-size: 36px;
+        padding: 10px;
+        color: #fff;
     }
 
     &__messages {

@@ -28,14 +28,46 @@
                     <span class="App__toolControl__hide App__toolControl__icon"></span>
                 </div>
 
-                <div class="App__toolControl__expandBox App__toolControl__box">
-                    <span class="App__toolControl__expand App__toolControl__icon"></span>
+                <div class="App__toolControl__expandBox App__toolControl__box" data-state="1">
+                    <span class="App__toolControl__expand App__toolControl__no-expand App__toolControl__icon"></span>
                 </div>
 
                 <div class="App__toolControl__closeBox App__toolControl__box">
                     <span class="App__toolControl__close App__toolControl__icon"></span>
                 </div>
 
+                <script>
+                    const { ipcRenderer } = require('electron');
+
+                    const ipc = ipcRenderer;
+
+                    const hide = document.querySelector('.App__toolControl__hideBox');
+                    const expand = document.querySelector('.App__toolControl__expandBox');
+                    const expandIcon = document.querySelector('.App__toolControl__expand');
+                    const close = document.querySelector('.App__toolControl__closeBox');
+
+                    hide.addEventListener('click', () => {
+                        ipc.send('hide');
+                    });
+
+                    expand.addEventListener('click', () => {
+                        ipc.send('expand',expand.getAttribute('data-state'));
+                    });
+
+                    close.addEventListener('click', () => {
+                        ipc.send('close');
+                    });
+
+                    ipc.on('maximize', () => {
+                        expand.dataset.state = 0;
+                        expandIcon.classList.remove('App__toolControl__no-expand')
+                    });
+
+                    ipc.on('unmaximize', () => {
+                        expand.dataset.state = 1;
+                        expandIcon.classList.add('App__toolControl__no-expand');
+                    });
+                </script>
             </div>
         </div>
 
@@ -64,7 +96,7 @@
                     <button class="createChat__button">
                         
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <image x="0" y="0" width="100%" height="100%" href="/assets/chat/create-chat-icon.svg"></image>
+                            <image x="0" y="0" width="100%" height="100%" href="./assets/chat/create-chat-icon.svg"></image>
                         </svg>
                     </button>
                 </div>
@@ -72,7 +104,7 @@
                 <div class="messager__otherFunction__listChats messager__otherFunction__item">
                     <button class="listChats__buttonOpenList">
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <image x="0" y="0" width="100%" height="100%" href="/assets/chat/chat-list-icon.svg"></image>
+                            <image x="0" y="0" width="100%" height="100%" href="./assets/chat/chat-list-icon.svg"></image>
                         </svg>
                     </button>
                 </div>
@@ -143,7 +175,7 @@
                         <input class="chat__inputBlock__container__input" placeholder="Введите сообщение...">
                         <button class="chat__inputBlock__container__buttonSend">
                             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <image x="0" y="0" width="100%" height="100%" href="/assets/chat/sendIcon.svg"></image>
+                                <image x="0" y="0" width="100%" height="100%" href="./assets/chat/sendIcon.svg"></image>
                             </svg>
                         </button>
                     </div>                    
@@ -152,5 +184,9 @@
             
         </div>
     </div>
+
+    <script>
+        require('./render.js');
+    </script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "Messenger",
+  "main": "main",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FomkaWyverno/ClientMesseger.git"
+  },
+  "author": "Fomka_Wyverno",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FomkaWyverno/ClientMesseger/issues"
+  },
+  "homepage": "https://github.com/FomkaWyverno/ClientMesseger#readme",
+  "dependencies": {
+    "electron": "^19.0.6"
+  }
+}

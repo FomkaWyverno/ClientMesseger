@@ -77,17 +77,19 @@ td {
 }
 
 .App__controlWindow {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  height: 30px;
   background-color: #222222;
+  height: 30px;
 }
 
 .App__nameBox {
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-left: 7.2px;
+  flex: 1 1 auto;
+  -webkit-app-region: drag;
 }
 
 .App__nameBox__name {
@@ -116,19 +118,19 @@ td {
 }
 
 .App__toolControl__hide {
-  background: url("/assets/control-window/hide-icon.svg") no-repeat;
+  background: url("../assets/control-window/hide-icon.svg") no-repeat;
 }
 
 .App__toolControl__expand {
-  background: url("/assets/control-window/expand-icon.svg") no-repeat;
+  background: url("../assets/control-window/expand-icon.svg") no-repeat;
 }
 
 .App__toolControl__no-expand {
-  background: url("/assets/control-window/no-expand-icon.svg") no-repeat;
+  background: url("../assets/control-window/no-expand-icon.svg") no-repeat;
 }
 
 .App__toolControl__close {
-  background: url("/assets/control-window/close-icon.svg") no-repeat;
+  background: url("../assets/control-window/close-icon.svg") no-repeat;
 }
 
 .App__toolControl__hideBox:hover {
@@ -391,7 +393,7 @@ td {
 }
 
 .chat__messages__connect__icon {
-  background: url("/assets/chat/user-connect-icon.svg") no-repeat;
+  background: url("../assets/chat/user-connect-icon.svg") no-repeat;
 }
 
 .chat__messages__connect__text {
@@ -403,7 +405,7 @@ td {
 }
 
 .chat__messages__disconnect__icon {
-  background: url("/assets/chat/user-disconnect-icon.svg") no-repeat;
+  background: url("../assets/chat/user-disconnect-icon.svg") no-repeat;
 }
 
 .chat__messages__disconnect__text {
@@ -482,7 +484,7 @@ td {
 }
 
 .window__wrapper__controlPanel__close {
-  background: url("/assets/chat/window-close-icon.svg") no-repeat;
+  background: url("../assets/chat/window-close-icon.svg") no-repeat;
   width: 30px;
   height: 30px;
   transition: .5s ease;
@@ -522,7 +524,7 @@ td {
 .window__wrapper__content__inputBlockSearch__icon {
   width: 30px;
   height: 30px;
-  background: url("/assets/chat/search-icon.svg") no-repeat;
+  background: url("../assets/chat/search-icon.svg") no-repeat;
   margin-right: 5px;
 }
 
@@ -635,7 +637,7 @@ td {
 }
 
 .window__wrapper__content__passwordForChat__inputBlock__icon {
-  background: url("/assets/chat/lock-icon.svg") no-repeat;
+  background: url("../assets/chat/lock-icon.svg") no-repeat;
 }
 
 .window__wrapper__content__createChat {
@@ -654,7 +656,7 @@ td {
 }
 
 .window__wrapper__content__createChat__inputBlockChatName__icon {
-  background: url("/assets/chat/chat-icon.svg") no-repeat;
+  background: url("../assets/chat/chat-icon.svg") no-repeat;
 }
 
 .window__wrapper__content__createChat__inputBlockChatPassword {
@@ -666,7 +668,7 @@ td {
 }
 
 .window__wrapper__content__createChat__inputBlockChatPassword__icon {
-  background: url("/assets/chat/lock-icon.svg") no-repeat;
+  background: url("../assets/chat/lock-icon.svg") no-repeat;
 }
 
 .window__wrapper__content__createChat__chatNameError {

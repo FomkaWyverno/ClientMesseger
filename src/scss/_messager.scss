@@ -158,7 +158,7 @@
         &__connect {
             background-color: #3CFE73;
             &__icon {
-                background: url("/assets/chat/user-connect-icon.svg") no-repeat;
+                background: url("../assets/chat/user-connect-icon.svg") no-repeat;
             }
             &__text {
                 color: #fff;
@@ -168,7 +168,7 @@
         &__disconnect {
             background-color: #C11F1F;
             &__icon {
-                background: url("/assets/chat/user-disconnect-icon.svg") no-repeat;
+                background: url("../assets/chat/user-disconnect-icon.svg") no-repeat;
             }
             &__text {
                 color: #000;

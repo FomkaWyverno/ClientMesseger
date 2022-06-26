@@ -30,7 +30,7 @@
             }
 
             &__close {
-                background: url("/assets/chat/window-close-icon.svg") no-repeat;
+                background: url("../assets/chat/window-close-icon.svg") no-repeat;
                 width: 30px;
                 height: 30px;
                 transition: .5s ease;
@@ -69,7 +69,7 @@
                 &__icon {
                     width: 30px;
                     height: 30px;
-                    background: url("/assets/chat/search-icon.svg") no-repeat;
+                    background: url("../assets/chat/search-icon.svg") no-repeat;
                     margin-right: 5px;
                 }
             }
@@ -177,7 +177,7 @@
 
                     margin-bottom: 15px;
                     &__icon {
-                        background: url("/assets/chat/lock-icon.svg") no-repeat;
+                        background: url("../assets/chat/lock-icon.svg") no-repeat;
                     }
                 }
             }
@@ -198,7 +198,7 @@
                     }
 
                     &__icon {
-                        background: url("/assets/chat/chat-icon.svg") no-repeat;
+                        background: url("../assets/chat/chat-icon.svg") no-repeat;
                     }
                 }
                 &__inputBlockChatPassword {
@@ -209,7 +209,7 @@
                     }
 
                     &__icon {
-                        background: url("/assets/chat/lock-icon.svg") no-repeat;
+                        background: url("../assets/chat/lock-icon.svg") no-repeat;
                     }
                 }
 

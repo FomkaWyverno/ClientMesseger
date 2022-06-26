@@ -10,22 +10,26 @@
     overflow: hidden;
 
     &__controlWindow {
+        position: relative;
         display: flex;
         justify-content: space-between;
+        background-color: #222222;
 
         height: 30px;
-        background-color: #222222;
     }
 
     &__nameBox {
         display: flex;
-        justify-content: center;
         align-items: center;
         margin-left: 7.2px;
+        
+        flex: 1 1 auto;
         &__name {
             font-size: 21.6px;
             color: #fff;
         }
+
+        -webkit-app-region: drag;
     }
 
     &__toolControl {
@@ -47,19 +51,19 @@
         }
 
         &__hide {   
-            background: url("/assets/control-window/hide-icon.svg") no-repeat;
+            background: url("../assets/control-window/hide-icon.svg") no-repeat;
         }
 
         &__expand {
-            background: url("/assets/control-window/expand-icon.svg") no-repeat;
+            background: url("../assets/control-window/expand-icon.svg") no-repeat;
         }
 
         &__no-expand {
-            background: url("/assets/control-window/no-expand-icon.svg") no-repeat;
+            background: url("../assets/control-window/no-expand-icon.svg") no-repeat;
         }
 
         &__close {
-            background: url("/assets/control-window/close-icon.svg") no-repeat;
+            background: url("../assets/control-window/close-icon.svg") no-repeat;
         }
 
         &__hideBox:hover {

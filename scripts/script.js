@@ -9,7 +9,11 @@ const windowOtherFunction = {
     },
     content : {
         listChat : document.querySelector('.wrapper__listChat'),
-        passwordForJoinChat : document.querySelector('.wrapper__passwordForChat'),
+        passwordForJoinChat : {
+            block : document.querySelector('.wrapper__passwordForChat'),
+            input : document.querySelector('.window__wrapper__content__passwordForChat__inputBlock__input'),
+            button : document.querySelector('.window__wrapper__content__passwordForChat__tryButton')
+        },
         createChat : document.querySelector('.wrapper__createChat')
     }
     
@@ -34,7 +38,8 @@ const blockChat = { // Блок чата
     input : document.querySelector('.chat__inputBlock__container__input'),
     nameBlock : document.querySelector('.chat__name'),
     nameSpan : document.querySelector('.chat__nameText'),
-    //buttonToMainChat : document.querySelector('.chat__connectToMainChat'),
+    buttonToMainChatBlock : document.querySelector('.window__wrapper__content__backToMainChat'),
+    buttonToMainChat : document.querySelector('.window__wrapper__content__backToMainChat__button'),
     buttonToSend : document.querySelector('.chat__inputBlock__container__buttonSend'),
     scroller : document.querySelector('.messager__scroller')
 }
@@ -57,6 +62,7 @@ const blockListChats = { // Блок список чатов
     //blockList : document.querySelector('.listChats__list'),
     list : document.querySelector('.window__wrapper__content__listChat'),
     inputSearch : document.querySelector('.window__wrapper__content__inputBlockSearch__input'),
+    emptyList : document.querySelector('.window__wrapper__content__listChat__empty')
 }
 
 const textConnectToMainChat = 'Перейти в Global Chat';
@@ -66,7 +72,7 @@ const textNicknameNotFree = 'Никнейм занят!';
 const textNotCorrectNick = 'Никнейм должен состоять от 3 до 20 символов и не должен иметь пробелов';
 const textBadPassword = 'Неверный пароль!';
 const textChatNoLongerExists = 'Чата больше не существует';
-const textPlaceholderPassworForChat = 'Введите пароль';
+const textPlaceholderPassworForChat = 'Введите пароль...';
 const textButtonConnectToPrivateChat = 'Подключиться';
 const textCreateChat = 'Создать чат';
 const textPlaceholderPressNameChat = 'Введите название чата';
@@ -96,17 +102,7 @@ function initText() { // Иницилизация текста в блоках
     blockIPAdress.text.textContent = textInputIP;
 
     blockAuthorization.text_input.textContent = textPressUsername;
-
-    //blockChat.buttonToMainChat.textContent = textConnectToMainChat;
-    //blockChat.input.placeholder = textPlaceholderPrintYouMessage;
-
-    //blockCreateChat.textButton.textContent = textCreateChat;
-    //blockCreateChat.inputNameChat.placeholder = textPlaceholderPressNameChat;
-    //blockCreateChat.inputPassword.placeholder = textPlaceholderPressPasswordForChat;
-    //blockCreateChat.buttonToCreate.textContent = textTryCreateChat;
-
-    //blockListChats.textButtonOpenList.textContent = textOpenList;
-    //blockListChats.inputSearch.placeholder = textPlaceholderSearchChat;
+    blockListChats.emptyList.textContent = textEmptyChatList;
 }
 
 function connectToServer() {
@@ -151,6 +147,7 @@ function connectToServer() {
                 const nameChat = response.data;
                 console.log(nameChat);
                 clearChat();
+                closeWindowOtherFunction();
                 blockChat.nameSpan.textContent = nameChat;
                 break;
             }
@@ -221,62 +218,66 @@ blockChat.buttonToSend.addEventListener('click', () => { // Считываем �
     }
 });
 
-
 windowOtherFunction.controlWindow.close.addEventListener('click', () => { // Закрытия окна после нажатия на крестик окна
     closeWindowOtherFunction();
 });
 
-//blockChat.buttonToMainChat.addEventListener('click', () => { // При клике отправляем запрос на подключение к главному чату
-//    console.log('Click to join global chat');
-//    sendRequestJoinToGlobalChat();
-//});
+windowOtherFunction.content.passwordForJoinChat.button.addEventListener('click', () => { // Отправить запрос на подключение к чату с паролем
+    sendReqestTryJoinToChat(
+        windowOtherFunction.content.passwordForJoinChat.button.getAttribute('data-chat-id')
+        ,windowOtherFunction.content.passwordForJoinChat.input.value);
+});
+
+windowOtherFunction.content.passwordForJoinChat.input.addEventListener('keypress', (event) => { // Отправить запрос на подключение к чату с паролем
+    if (event.key === 'Enter') {
+        sendReqestTryJoinToChat(
+            windowOtherFunction.content.passwordForJoinChat.button.getAttribute('data-chat-id')
+            ,windowOtherFunction.content.passwordForJoinChat.input.value);
+    }
+});
 
 blockCreateChat.button.addEventListener('click', () => { // Открыть закрыть инпуты для создания чата
    openCreateChat();
 });
-
-//blockCreateChat.buttonToCreate.addEventListener('click', () => { // Отправляем запрос на создание чата
-//    sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
-//});
-
-//blockCreateChat.inputNameChat.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
-//    if (event.key === 'Enter') {
-//        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
-//    }
-//});
-
-//blockCreateChat.inputPassword.addEventListener('keyup', (event) => { // Отправляем запрос на создание чата
-//    if (event.key === 'Enter') {
-//        sendRequestTryCreateChat(blockCreateChat.inputNameChat.value, blockCreateChat.inputPassword.value);
-//    }
-//});
 
 blockListChats.buttonOpenList.addEventListener('click', () => { // Открыть закрыть чаты
     openChatList();
     sendRequestGetListChat();
 });
 
-// blockListChats.inputSearch.addEventListener('input', () => { // При вводе текста ищем чат соотвествующий вводу
-//     const value = blockListChats.inputSearch.value;
-//     const length = value.length;
+blockListChats.inputSearch.addEventListener('input', () => { // Когда вводят текст для поиска чата
+    const input = blockListChats.inputSearch;
+    const value = input.value.toLowerCase();
+    const length = value.length;
+    const list = blockListChats.list;
 
-//     const list = blockListChats.list;
+    const lengthList = list.children.length;
+    let counterHidedElement = 1;
+    for (let i = 0; i < lengthList; i++) { // Проходимся по каждому элемента списка
+        const element = list.children[i];
+        if (element.hasAttribute('data-name-chat')) {
+            const elementChatName = element.getAttribute('data-name-chat');
+            const subStringChatName = elementChatName.substring(0, length);
 
-//     for (let i = 0; i < list.children.length; i++) { // Проходимся по каждому элемента списка
-//         const element = list.children[i]; // Сохраняем элемент в переменную
-//         let nameChat = element.getAttribute('data-name-chat'); // Узнаем значение атрибута названия чата
-//         nameChat = nameChat.substring(0, length);
-//         if (nameChat.toLowerCase() !== value.toLowerCase()) {
-//             console.log('Not Fit item ->')
-//             console.log(element);
-//             element.classList.add('hide');
-//         } else {
-//             console.log('Fit item ->');
-//             console.log(element);
-//             element.classList.remove('hide');
-//         }
-//     }
-// });
+            if (value == subStringChatName) {
+                element.classList.remove('hide');
+            } else {
+                element.classList.add('hide');
+                counterHidedElement++;
+            }
+        }
+    }
+    console.log(`lenght list = ${lengthList} counter = ${counterHidedElement} boolean = ${lengthList == counterHidedElement}`);
+    if (lengthList == counterHidedElement) {
+        blockListChats.emptyList.classList.remove('hide');
+    } else {
+        blockListChats.emptyList.classList.add('hide');
+    }
+});
+
+blockChat.buttonToMainChat.addEventListener('click', () => {
+    sendRequestJoinToGlobalChat();
+});
 
 function isCorrectNickname(nickname) { // Проверяем ник что бы он состоял от 3 до 20 символов и не должен иметь пробелов
     return nickname.length > 3 && nickname.length <= 20 && !nickname.includes(' ');
@@ -420,8 +421,13 @@ function receivedTryJoinToChat(data) { // Функция которая пров
         }
         case 1: {
             const DATA = JSON.parse(data.data);
-            const span = document.getElementById(`chatErrorID:${DATA.chatID}`);
-            span.textContent = textBadPassword;
+            windowOtherFunction.content.passwordForJoinChat.input.placeholder = textBadPassword;
+            windowOtherFunction.content.passwordForJoinChat.input.classList.add('badPasswordPlaceholder');
+            windowOtherFunction.content.passwordForJoinChat.input.value = '';
+            setTimeout(()=>{
+                windowOtherFunction.content.passwordForJoinChat.input.classList.remove('badPasswordPlaceholder');
+                windowOtherFunction.content.passwordForJoinChat.input.placeholder = textPlaceholderPassworForChat;
+            },3000);
             break;
         }
 
@@ -578,72 +584,52 @@ function gotChatList(response) { // Получение списка
 
     if (chatList.length !== 0) {
         chatList.forEach(chat => { // Проходимся по всему списку чату
-            const elementList = document.createElement('li'); // Создаем элемент списка
-            elementList.classList.add('listChats__list__ul__element'); // Добавляем ему класс
+            
+            // <li class="window__wrapper__content__listChat__element">
+            //     <span class="window__wrapper__content__listChat__element__name">${chat.nameChat}</span>
+            //     <button class="window__wrapper__content__listChat__element__button" id="buttonConnectToChat:${chat.id}">${textButtonConnectToPrivateChat}</button>
+            // </li>
 
-            const chatElement = document.createElement('div'); // Создаем чат элемент
-            chatElement.classList.add('chatElement'); // Добавляем ему класс
+            const li = document.createElement('li'); // Создаем элемент листа
+            li.classList.add('window__wrapper__content__listChat__element');
+            li.dataset.nameChat = chat.nameChat.toLowerCase(); // Добавляем айди элемента
 
-            elementList.appendChild(chatElement); // Добавлям в Элемент списка Чат Элемент
+            const span = document.createElement('span'); // Создаем элемента названия чата
+            span.classList.add('window__wrapper__content__listChat__element__name'); // Добавляем класс
+            span.textContent = chat.nameChat; // Устанавливаем имя
 
-            const nameChat = document.createElement('span'); // Создаем спан имени чата
-            const inputPassword = document.createElement('input'); // Создаем инпут для пароля
-            const buttonConnect = document.createElement('button'); // Создаем кнопку для присоидинения к чату
-            const textError = document.createElement('span'); // Создаем спан для вывода ошибки
-            nameChat.textContent = chat.nameChat; // Устанавливаем название чата
-            elementList.dataset.nameChat = chat.nameChat; // Устанавливаем атрибут данных имя чата
-            inputPassword.type = 'password'; // Ставим тип инпута пароль
-            inputPassword.placeholder = textPlaceholderPassworForChat; // Устанавливаем плейсхолдер
-            buttonConnect.textContent = textButtonConnectToPrivateChat; // Устанавливаем текстовый конент кнопки
-            nameChat.classList.add('chatElement__nameChat'); // Добавляем класс для имени чата
-            inputPassword.classList.add('chatElement__inputPassword'); // Добавляем класс для инпута пароля
-            buttonConnect.classList.add('chatElement__button'); // Добавляем класс для кнопки подключения
-            textError.classList.add('chatElement__textError'); // Добавляем класс для отображение текста ошибки
+            const button = document.createElement('button'); // Создаем кнопку
+            button.classList.add('window__wrapper__content__listChat__element__button'); // Добавляем класс для кнопки
+            //button.id = `buttonConnectToChat:${chat.id}`; // Добавляем айди для кнопки
+            button.textContent = textButtonConnectToPrivateChat; // Устанавливаем описание кнопки
 
-            if (!chat.hasPassword) { // Если нету пароля у чата
-                inputPassword.classList.add('hide'); // Скрываем поле ввода для пароля
-                elementList.dataset.hasPassword = 'false'; // Ставим атрибут что чат не имеет пароля
-            } else { // Иначе
-                elementList.dataset.hasPassword = 'true'; // Ставим атрибут что чат имеет пароль
-            }
+            li.appendChild(span);
+            li.appendChild(button);
 
-            buttonConnect.addEventListener('click', () => { // При клике отправляем запрос на подключение к чату 
-                sendReqestTryJoinToChat(chat.id, inputPassword.value);
-            });
+            blockListChats.list.appendChild(li);
 
-            inputPassword.addEventListener('keypress', (event) => { // При нажатия на ENTER отправляем запрос на подключение к чату 
-                if (event.key === 'Enter') {
-                    sendReqestTryJoinToChat(chat.id, inputPassword.value);
+            button.addEventListener('click',() => {
+                if (chat.hasPassword) {
+                    openPasswordForChat(chat.id,chat.nameChat);
+                } else {
+                    sendReqestTryJoinToChat(chat.id,'');
                 }
             });
-
-            inputPassword.addEventListener('input', () => { // При вводе удаляем причину ошибки подключения к чату
-                textError.textContent = '';
-            });
-
-            chatElement.appendChild(nameChat); // Добавляем имя чата в чат элемент
-            chatElement.appendChild(inputPassword); // Добавляем инпут пароля в чат элемент
-            chatElement.appendChild(buttonConnect); // Добавляем кнопку подключения в чат элемент
-            chatElement.appendChild(textError); // Добавляем текстовую ошибку в чат элемент
-
-            textError.id = `chatErrorID:${chat.id}`; // Устанавливаем спану который выводит ошибку id
-            elementList.id = `chatID:${chat.id}`; // Устанавливаем элементу id
-
-            blockListChats.list.appendChild(elementList); // Добавляем элемент листа в лист
         });
     } else {
-        const spanEmpty = document.createElement('span');
-        spanEmpty.classList.add('window__wrapper__content__listChat__empty');
-        spanEmpty.textContent = textEmptyChatList;
-        blockListChats.list.appendChild(spanEmpty);
+        blockListChats.emptyList.classList.remove('hide');    
     }
     
 }
 
 function clearChatList() { // Очищаем весь список чатов
-    console.log('Remove childer for chat list')
-    while (blockListChats.list.firstChild) {
-        blockListChats.list.firstChild.remove();
+    console.log('Remove childer for chat list');
+    const list = blockListChats.list.children;
+
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].classList.contains('window__wrapper__content__listChat__element')) {
+            list[i].remove();
+        }
     }
 }
 
@@ -665,36 +651,22 @@ function clearAll() { // Очищаем все что мы получили от
 }
 
 function openButtonForToMain() { // Открыть кнопку подключение к главному чату
-    blockChat.buttonToMainChat.classList.remove('hide');
+    blockChat.buttonToMainChatBlock.classList.remove('hide');
 }
 
 function hideButtonForToMain() { // Скрыть кнопку подключение к главному чату
-    blockChat.buttonToMainChat.classList.add('hide');
+    blockChat.buttonToMainChatBlock.classList.add('hide');
 }
 
 function disconnectServer() { // Функция отключение от сервера
     blockIPAdress.block.classList.remove('hide'); // Убираем с инпута ip скрытие
     resetHideClasses(); // Ставим классы по дефолту
+    centerBox.classList.remove('hide');
     clearAll(); // Очищаем все данные
     socket.close();
 }
 
 function resetHideClasses() { // Установить класс "hide" всем элементам которые имеют его изначально
-    // centerBox.classList.remove('hide'); // Открываем бокс для центра
-    
-    // messagerBlock.classList.add('hide'); // Скрываем месенджер
-
-    // blockChat.block.classList.add('hide'); // Скрываем блок чата
-    // blockAuthorization.block.classList.add('hide'); // Скрываем блок авторизации
-    // blockChat.block.classList.add('hide'); // Скрываем чат
-    // //blockChat.buttonToMainChat.classList.add('hide'); // Скрываем кнопку выхода в глобальный чат
-
-    // //blockCreateChat.block.classList.add('hide'); // Скрыть создание чата
-    // blockCreateChat.blockInput.classList.add('hide'); // Скрыть инпуты у создания чата
-
-    // blockListChats.block.classList.add('hide'); // Скрыть блок списка чатов
-    // blockListChats.blockList.classList.add('hide'); // Скрыть список чатов
-
     defaultHideElement.forEach(element => {
         element.classList.add('hide');
     });
@@ -713,7 +685,7 @@ function closeWindowOtherFunction() { // Закрыть окно других ф
 function hideLayerInWindowOtherFunction() { // Скрыть все что имеет внутри себя окно других функций
     windowOtherFunction.content.createChat.classList.add('hide');
     windowOtherFunction.content.listChat.classList.add('hide');
-    windowOtherFunction.content.passwordForJoinChat.classList.add('hide');
+    windowOtherFunction.content.passwordForJoinChat.block.classList.add('hide');
 }
 
 function setNameWindowOtherFunction(name) { // Установить имя окна
@@ -730,4 +702,12 @@ function openChatList() {
     openWindowOtherFunction();
     setNameWindowOtherFunction(textListChat);
     windowOtherFunction.content.listChat.classList.remove('hide');
+}
+
+function openPasswordForChat(chatID,nameChat) {
+    setNameWindowOtherFunction(nameChat);
+    windowOtherFunction.content.passwordForJoinChat.block.classList.remove('hide');
+    windowOtherFunction.content.listChat.classList.add('hide');
+    
+    windowOtherFunction.content.passwordForJoinChat.button.dataset.chatId = chatID;
 }

@@ -501,6 +501,7 @@ td {
   height: 100%;
   border: 0;
   font-size: 26px;
+  color: #363636;
 }
 
 .window__wrapper__content__inputBlockSearch__input::placeholder {
@@ -575,7 +576,7 @@ td {
 
 .window__wrapper__content__listChat__element__button {
   position: relative;
-  background-color: #fff;
+  background-color: #D9D9D9;
   border: 0;
   border-radius: 5px;
   box-shadow: 3px 3px 4px #949494;
@@ -587,7 +588,23 @@ td {
 }
 
 .window__wrapper__content__listChat__element__button:hover {
+  background-color: #fff;
+}
+
+.window__wrapper__content__listChat__element__button:active {
   top: 2px;
+}
+
+.window__wrapper__content__backToMainChat {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.window__wrapper__content__backToMainChat__button {
+  padding: 5px;
+  font-size: 26px;
 }
 
 .window__wrapper__content__passwordForChat {
@@ -599,6 +616,10 @@ td {
 
 .window__wrapper__content__passwordForChat__inputBlock {
   margin-bottom: 15px;
+}
+
+.window__wrapper__content__passwordForChat__inputBlock__input {
+  color: #363636;
 }
 
 .window__wrapper__content__passwordForChat__inputBlock__icon {
@@ -640,11 +661,9 @@ td {
   border: 0;
   padding: 0;
   font-size: 36px;
-  color: #363636;
 }
 
 .windowInputBlockLight input::placeholder {
-  color: #595959;
   font-size: 24px;
   text-align: justify;
 }
@@ -674,6 +693,10 @@ td {
 .windowButtonLight:active {
   left: 3px;
   top: 3px;
+}
+
+.badPasswordPlaceholder::placeholder {
+  color: #c11f1f;
 }
 
 .hide {

@@ -57,6 +57,7 @@
                     height: 100%;
                     border: 0;
                     font-size: 26px;
+                    color: #363636;
                     &::placeholder {
                         color: #525252;
                     }
@@ -121,7 +122,7 @@
 
                     &__button {
                         position: relative;
-                        background-color: #fff;
+                        background-color: #D9D9D9;
                         border: 0;
                         border-radius: 5px;
                         box-shadow: 3px 3px 4px #949494;
@@ -133,9 +134,27 @@
                         font-size: 36px;
 
                         &:hover {
+                            background-color: #fff;
+                        }
+                        &:active {
                             top: 2px;
                         }
                     }
+                }
+            }
+
+            &__backToMainChat {
+                // background-color: #474747;
+                // border-radius: 10px;
+                margin-top: 10px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &__button {
+                    padding: 5px;
+                    font-size: 26px;
                 }
             }
 
@@ -146,6 +165,10 @@
                 justify-content: center;
                 align-items: center;
                 &__inputBlock {
+
+                    &__input {
+                        color: #363636;
+                    }
 
                     margin-bottom: 15px;
                     &__icon {
@@ -191,10 +214,8 @@
         
         font-size: 36px;
         
-        color: #363636;
 
         &::placeholder {
-            color: #595959;
             font-size: 24px;
             text-align:justify;
         }
@@ -227,4 +248,8 @@
         left: 3px;
         top: 3px;
     }
+}
+
+.badPasswordPlaceholder::placeholder {
+    color: #c11f1f;
 }

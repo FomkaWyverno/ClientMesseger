@@ -353,31 +353,32 @@ function receivedElementsChat(data) { // Добавляем сообщения �
 function receivedMessage(data) { // Добавляем блок сообщения в чате
 
     const blockMessage = document.createElement('li');
+    const wrapperMessage = document.createElement('div');
 
-    
-
-    blockMessage.classList.add('chat__messages__message');
+    blockMessage.classList.add('chat__messages__element');
+    wrapperMessage.classList.add('chat__messages__element__message');
     blockMessage.id = `element:${data.id}`;
 
     const blockNickname = document.createElement('span');
     const blockText = document.createElement('span');
-    blockNickname.classList.add('chat__messages__message__nickname');
-    blockText.classList.add('chat__messages__message__text');
+    blockNickname.classList.add('chat__messages__element__message__nickname');
+    blockText.classList.add('chat__messages__element__message__text');
 
-    blockMessage.appendChild(blockNickname);
-    blockMessage.appendChild(blockText);
+    wrapperMessage.appendChild(blockNickname);
+    wrapperMessage.appendChild(blockText);
+    blockMessage.appendChild(wrapperMessage);
     
     blockText.textContent = data.message;
 
     if (data.client.uid === clientUID) {
-        blockMessage.classList.add('chat__messages__message--self');
+        blockMessage.classList.add('chat__messages__element--self');
+        wrapperMessage.classList.add('chat__messages__element__message--self');
         blockNickname.textContent = `${textSelfMessage}:`;
     } else {
         blockNickname.textContent = `${data.client.nickname}:`;
     }
 
     blockChat.messages.appendChild(blockMessage);
-
     return blockMessage;
 
 }
@@ -390,28 +391,34 @@ function receivedJoinUserToChat(data) { // Добавляем блок прис�
 
 
 
-    const blockConnect = document.createElement('li');
-    blockConnect.classList.add('chat__messages__connect');
-    blockConnect.classList.add('chat__messages__networkBox');
-    blockConnect.id = `element:${data.id}`;
+    const li = document.createElement('li');
+    li.classList.add('chat__messages__element');
+
+    const div = document.createElement('div');
+
+
+    div.classList.add('chat__messages__element__connect');
+    div.classList.add('chat__messages__element__networkBox');
+    li.id = `element:${data.id}`;
     console.log(`Element: ${data.client.nickname}`);
 
     const icon = document.createElement('span');
-    icon.classList.add('chat__messages__connect__icon');
-    icon.classList.add('chat__messages__networkBox__icon');
+    icon.classList.add('chat__messages__element__connect__icon');
+    icon.classList.add('chat__messages__element__networkBox__icon');
 
     const span = document.createElement('span');
-    span.classList.add('chat__messages__connect__text');
-    span.classList.add('chat__messages__networkBox__text');
+    span.classList.add('chat__messages__element__connect__text');
+    span.classList.add('chat__messages__element__networkBox__text');
     span.textContent = `${data.client.nickname}`;
 
-    blockConnect.appendChild(icon);
-    blockConnect.appendChild(span);
-    blockChat.messages.appendChild(blockConnect);
+    div.appendChild(icon);
+    div.appendChild(span);
+    li.appendChild(div);
+    blockChat.messages.appendChild(li);
 
     
 
-    return blockConnect;
+    return li;
 }
 
 function receivedLeaveUserFromChat(data) { // Добавляем блок о отключение пользователя
@@ -420,26 +427,32 @@ function receivedLeaveUserFromChat(data) { // Добавляем блок о о�
         data = JSON.parse(data);
     }
 
-    const blockConnect = document.createElement('li');
-    blockConnect.classList.add('chat__messages__disconnect');
-    blockConnect.classList.add('chat__messages__networkBox');
-    blockConnect.id = `element:${data.id}`;
+    const li = document.createElement('li');
+    li.classList.add('chat__messages__element');
+
+    const div = document.createElement('div');
+
+
+    div.classList.add('chat__messages__element__disconnect');
+    div.classList.add('chat__messages__element__networkBox');
+    li.id = `element:${data.id}`;
     console.log(`Element: ${data.client.nickname}`);
 
     const icon = document.createElement('span');
-    icon.classList.add('chat__messages__disconnect__icon');
-    icon.classList.add('chat__messages__networkBox__icon');
+    icon.classList.add('chat__messages__element__disconnect__icon');
+    icon.classList.add('chat__messages__element__networkBox__icon');
 
     const span = document.createElement('span');
-    span.classList.add('chat__messages__disconnect__text');
-    span.classList.add('chat__messages__networkBox__text');
+    span.classList.add('chat__messages__element__disconnect__text');
+    span.classList.add('chat__messages__element__networkBox__text');
     span.textContent = `${data.client.nickname}`;
 
-    blockConnect.appendChild(icon);
-    blockConnect.appendChild(span);
-    blockChat.messages.appendChild(blockConnect);
+    div.appendChild(icon);
+    div.appendChild(span);
+    li.appendChild(div);
+    blockChat.messages.appendChild(li);
 
-    return blockConnect;
+    return li;
 }
 
 function receivedDeleteElementChat(data) { // Функция удаление элемента из чата
@@ -761,5 +774,14 @@ function tryCreateChat() { // Функция которая выполняетс
         windowOtherFunction.content.createChat.inputName.value = ''; // Очистить текст который был написан пользователем
         windowOtherFunction.content.createChat.chatNameErrorText.classList.remove('hide'); // Открыть ошибку
         windowOtherFunction.content.createChat.chatNameErrorText.textContent = textNotCorrectChatName; // Написать текст ошибки
+    }
+}
+
+
+
+function animatedMessage(message) {
+    if (!message.classList.contains('chat__messages__message--self')) {
+        message.style.left = '350px';
+        setTimeout(()=> {message.style.left = '0px';},1000);
     }
 }

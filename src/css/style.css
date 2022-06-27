@@ -336,7 +336,12 @@ td {
   margin-bottom: 20px;
 }
 
-.chat__messages__message {
+.chat__messages__element {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.chat__messages__element__message {
   position: relative;
   background-color: #DD901D;
   padding: 16px;
@@ -345,31 +350,34 @@ td {
   max-width: 700px;
   width: fit-content;
   font-family: 'Yanone Kaffeesatz', sans-serif;
-  margin-bottom: 20px;
   animation: animateMessage 1s 1 ease forwards;
 }
 
-.chat__messages__message__nickname {
+.chat__messages__element__message__nickname {
   display: block;
   font-size: 36px;
   color: #141414;
 }
 
-.chat__messages__message__text {
+.chat__messages__element__message__text {
   display: block;
   font-size: 50px;
   overflow-wrap: anywhere;
   color: #fff;
 }
 
-.chat__messages__message--self {
+.chat__messages__element__message--self {
   background-color: #92B0FF;
-  align-self: flex-end;
-  margin-right: 5px;
   animation: animateSelfMessage 1s 1 ease forwards;
 }
 
-.chat__messages__networkBox {
+.chat__messages__element--self {
+  justify-content: flex-end;
+  margin-right: 5px;
+}
+
+.chat__messages__element__networkBox {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -379,39 +387,40 @@ td {
   width: fit-content;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 36px;
+  animation: animateMessage 1s 1 ease forwards;
 }
 
-.chat__messages__networkBox__icon {
+.chat__messages__element__networkBox__icon {
   display: block;
   width: 75px;
   height: 50px;
 }
 
-.chat__messages__networkBox__text {
+.chat__messages__element__networkBox__text {
   margin-left: 10px;
 }
 
-.chat__messages__connect {
+.chat__messages__element__connect {
   background-color: #3CFE73;
 }
 
-.chat__messages__connect__icon {
+.chat__messages__element__connect__icon {
   background: url("../assets/chat/user-connect-icon.svg") no-repeat;
 }
 
-.chat__messages__connect__text {
+.chat__messages__element__connect__text {
   color: #fff;
 }
 
-.chat__messages__disconnect {
+.chat__messages__element__disconnect {
   background-color: #C11F1F;
 }
 
-.chat__messages__disconnect__icon {
+.chat__messages__element__disconnect__icon {
   background: url("../assets/chat/user-disconnect-icon.svg") no-repeat;
 }
 
-.chat__messages__disconnect__text {
+.chat__messages__element__disconnect__text {
   color: #000;
 }
 

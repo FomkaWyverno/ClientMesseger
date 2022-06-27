@@ -95,60 +95,71 @@
             margin-bottom: 20px;
         }
 
-        &__message {
-            position: relative;
-            background-color: #DD901D;
-            padding: 16px;
-            border-radius: 25px;
-
-            min-width: 300px;
-            max-width: 700px;
-            width: fit-content;
-
-            font-family: 'Yanone Kaffeesatz', sans-serif;
+        &__element {
+            display: flex;
 
             margin-bottom: 20px;
 
-            animation: animateMessage 1s 1 ease forwards;
+            &__message {
 
-            &__nickname {
-                display: block;
-                font-size: 36px;
-                color: #141414;
-            }
+                position: relative;
+                background-color: #DD901D;
+                padding: 16px;
+                border-radius: 25px;
 
-            &__text {
-                display: block;
-                font-size: 50px;
-                overflow-wrap: anywhere;
-                color: #fff;
+                min-width: 300px;
+                max-width: 700px;
+                width: fit-content;
+
+                font-family: 'Yanone Kaffeesatz', sans-serif;
+
+                animation: animateMessage 1s 1 ease forwards;
+
+                &__nickname {
+                    display: block;
+                    font-size: 36px;
+                    color: #141414;
+                }
+
+                &__text {
+                    display: block;
+                    font-size: 50px;
+                    overflow-wrap: anywhere;
+                    color: #fff;
+                }
+
+                &--self {
+                    background-color: #92B0FF;
+
+                    animation: animateSelfMessage 1s 1 ease forwards;
+                }
             }
 
             &--self {
-                background-color: #92B0FF;
-                align-self: flex-end;
+                justify-content: flex-end;
+
                 margin-right: 5px;
-
-                animation: animateSelfMessage 1s 1 ease forwards;
             }
-        }
 
-        &__networkBox {
-            display: flex;
-            flex-direction: row;
+            &__networkBox {
+                position: relative;
+                display: flex;
+                flex-direction: row;
 
-            align-items: center;
+                align-items: center;
 
-            border-radius: 25px;
+                border-radius: 25px;
 
-            padding: 30px 25px 30px;
+                padding: 30px 25px 30px;
 
-            min-width: 300px;
+                min-width: 300px;
 
-            width: fit-content;
-            
-            font-family: 'Yanone Kaffeesatz', sans-serif;
-            font-size: 36px;
+                width: fit-content;
+                
+                font-family: 'Yanone Kaffeesatz', sans-serif;
+                font-size: 36px;
+
+                animation: animateMessage 1s 1 ease forwards;
 
             &__icon {
                 display: block;
@@ -158,27 +169,34 @@
             &__text {
                 margin-left: 10px;
             }
+            }
+
+            &__connect {
+                background-color: #3CFE73;
+                &__icon {
+                    background: url("../assets/chat/user-connect-icon.svg") no-repeat;
+                }
+                &__text {
+                    color: #fff;
+                }
+            }
+
+            &__disconnect {
+                background-color: #C11F1F;
+            
+                &__icon {
+                    background: url("../assets/chat/user-disconnect-icon.svg") no-repeat;
+                }
+            
+                &__text {
+                    color: #000;
+                }
+            }
         }
 
-        &__connect {
-            background-color: #3CFE73;
-            &__icon {
-                background: url("../assets/chat/user-connect-icon.svg") no-repeat;
-            }
-            &__text {
-                color: #fff;
-            }
-        }
+            
 
-        &__disconnect {
-            background-color: #C11F1F;
-            &__icon {
-                background: url("../assets/chat/user-disconnect-icon.svg") no-repeat;
-            }
-            &__text {
-                color: #000;
-            }
-        }
+        
     }
 
     &__inputBlock {

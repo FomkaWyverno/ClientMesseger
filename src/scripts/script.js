@@ -736,12 +736,19 @@ function resetHideClasses() { // Установить класс "hide" всем
 
 function openWindowOtherFunction() { // Открыть окно других функций
     windowOtherFunction.block.classList.remove('hide');
+    setTimeout(()=> {windowOtherFunction.block.classList.remove('window--hide');},10);
 }
+    
 
 function closeWindowOtherFunction() { // Закрыть окно других функций
-    windowOtherFunction.block.classList.add('hide');
-    hideLayerInWindowOtherFunction();
-    clearChatList();
+    windowOtherFunction.block.classList.add('window--hide');
+
+    setTimeout(() => {
+        windowOtherFunction.block.classList.add('hide');
+        hideLayerInWindowOtherFunction();
+        clearChatList();
+        isCloseWindow = false;
+    },300);
 }
 
 function hideLayerInWindowOtherFunction() { // Скрыть все что имеет внутри себя окно других функций

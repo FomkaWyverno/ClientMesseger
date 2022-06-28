@@ -492,6 +492,8 @@ td {
   backdrop-filter: blur(2px);
   justify-content: center;
   align-items: center;
+  opacity: 1;
+  transition: .3s ease;
 }
 
 .window__wrapper {
@@ -759,6 +761,10 @@ td {
 
 .badAnyPlaceholder::placeholder {
   color: #c11f1f;
+}
+
+.window--hide {
+  opacity: 0;
 }
 
 .hide {

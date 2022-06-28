@@ -11,6 +11,10 @@
     justify-content: center;
     align-items: center;
 
+    opacity: 1;
+
+    transition: .3s ease;
+
     &__wrapper {
         background-color: #363636;
         border-radius: 15px;
@@ -279,4 +283,8 @@
 
 .badAnyPlaceholder::placeholder {
     color: #c11f1f;
+}
+
+.window--hide {
+    opacity: 0;
 }

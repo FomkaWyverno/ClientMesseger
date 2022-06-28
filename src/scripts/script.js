@@ -794,12 +794,3 @@ function tryCreateChat() { // Функция которая выполняетс
         windowOtherFunction.content.createChat.chatNameErrorText.textContent = textNotCorrectChatName; // Написать текст ошибки
     }
 }
-
-
-
-function animatedMessage(message) {
-    if (!message.classList.contains('chat__messages__message--self')) {
-        message.style.left = '350px';
-        setTimeout(()=> {message.style.left = '0px';},1000);
-    }
-}

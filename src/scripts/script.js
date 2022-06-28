@@ -94,6 +94,8 @@ const textSelfMessage = 'Вы';
 const textEmptyChatList = 'Список пуст!';
 const textNotCorrectChatName = 'Имя чата должен состоят от 4 до 15 символов и не должен иметь пробелов';
 const textTryConnectToSelfChat = 'Вы пытались подключиться к чату в котором вы уже состоите';
+const textIpAdressIsNotExists = 'Введите коректный ip-адресс!';
+const textConnection = 'Подключаемся...';
 
 let socket;
 let clientUID;
@@ -115,11 +117,14 @@ function initText() { // Иницилизация текста в блоках
 }
 
 function connectToServer() {
+    blockIPAdress.text.textContent = textConnection; // Оповещаем о подключении к серверу...
+
     const socket = new WebSocket(`ws://${blockIPAdress.input.value}`); // Подключаемся в серверу
 
     socket.onopen = () => { // Мы получили соединение с сервером 
         blockIPAdress.block.classList.add('hide'); // Скрываем блок с вводом IP
         blockAuthorization.block.classList.remove('hide'); // Показываем блок с авторизацией
+        blockIPAdress.text.textContent = textInputIP;
     };
 
     socket.onmessage = (event) => { // Обработка сообщений от сервера
@@ -204,6 +209,11 @@ function connectToServer() {
     socket.onerror = (event) => { // Обработка ошибок
         console.log("Error connected causes ->");
         console.log(event);
+        blockIPAdress.text.textContent = textIpAdressIsNotExists;
+
+        setTimeout(()=> {
+            blockIPAdress.text.textContent = textInputIP;
+        },3000);
         disconnectServer();
     };
     
@@ -667,6 +677,7 @@ function gotChatList(response) { // Получение списка
                 }
             });
         });
+        blockListChats.emptyList.classList.add('hide');
     } else {
         blockListChats.emptyList.classList.remove('hide');    
     }

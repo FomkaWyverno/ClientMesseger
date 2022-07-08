@@ -80,11 +80,30 @@
             </div>
             <div class="authorization hide">
                 <div class="authorization__block">
-                    <input class="authorization__input" id="nicknameInput" name="nicknameInput" type="text" required>
-                    <label for="nicknameInput" class="authorization__label">
-                        <span class="authorization__text noselectText"></span>
-                    </label>
-                    <span class="authorization__error"></span>
+                    <span class="authorization__block__formName">Авторизация</span>
+
+                    <div class="authorization__block__username authorization__block__default">
+                        <input class="authorization__block__username__input authorization__block__default__input" id="nicknameInput" name="nicknameInput" type="text" required>
+                        <label for="nicknameInput" class="authorization__block__username__label">
+                            <span class="authorization__block__username__text noselectText"></span>
+                        </label>
+                        <span class="authorization__block__username__error authorization__block__default__error noselectText"></span>
+                    </div>
+                    
+                    <div class="authorization__block__password authorization__block__default">
+                        <input class="authorization__block__password__input authorization__block__default__input" name="passwordInput" type="password" required>
+                        <label for="passwordInput" class="authorization__block__password__label">
+                            <span class="authorization__block__password__text noselectText"></span>
+                        </label>
+                        <span class="authorization__block__password__error authorization__block__default__error noselectText"></span>
+                    </div>
+
+                    <button class="authorization__block__submit authorization__block__defaultButton">
+                        <span class="authorization__block__submit__text authorization__block__defaultButton__text">Авторизоваться</span>
+                    </button>
+                    <button class="authorization__block__change authorization__block__defaultButton">
+                        <span class="authorization__block__change__text authorization__block__defaultButton__text">Регистрация</span>
+                    </button>
                 </div>
             </div>
         </div>

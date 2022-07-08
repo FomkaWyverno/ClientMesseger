@@ -49,26 +49,129 @@
 }
 
 .authorization {
-    position: relative;
     
-    &__input {
-        &:focus {
-            @include inputLabelAuthFocus;
+    &__block {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        
+
+        justify-content: center;
+        align-items: center;
+
+        background-color: #222222;
+
+        padding: 45px;
+
+        border-radius: 35px;
+
+        overflow: hidden;
+
+        &__formName {
+            font-size: 56px;
+            color: #fff;
+
+            margin-bottom: 45px;
+            z-index: 1;
         }
-        &:valid {
-            @include inputLabelAuthValid;
+
+        &__default {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+
+            &__input {
+                z-index: 1;
+            }
+
+            &__error {
+                margin-top: 25px;
+                max-width: fit-content;
+                font-size: 36px;
+                color: #fa3e3e;
+            
+                text-shadow: 0px 0px 5px #fa3e3e;
+            }
         }
-    }
 
-    &__error {
-        position: absolute;
+        &__username {
+            &__input {
+                &:focus {
+                    @include inputLabelAuthFocus;
+                }
+                
+                &:valid {
+                    @include inputLabelAuthValid;
+                }
+            }           
+        }
+        &__password {
 
-        left: 0;
-        bottom: -150%;
+            margin-top: 35px;
 
-        font-size: 36px;
-        color: #fa3e3e;
+            &__input {
+                &:focus {
+                    @include inputLabelAuthFocus;
+                }
+                &:valid {
+                    @include inputLabelAuthValid;
+                }
+            }
+        }
 
-        text-shadow: 0px 0px 5px #fa3e3e;
+        &__defaultButton {
+            position: relative;
+
+            padding: 15px;
+            font-size: 26px;
+
+            border: none;
+
+            overflow: hidden;
+
+            background-color: #B4B4B4;
+
+            box-shadow: 5px 5px #383838;
+
+            cursor: pointer;
+
+            transition: top, left .5s ease;
+            
+            &::before {
+                position: absolute;
+                display: block;
+                content: '';
+                width: 100%;
+                height: 100%;
+                left: 100%;
+                top: 0;
+
+                background-color: #08b83c;
+
+                transition: left .5s ease;
+            }
+
+            &:hover {
+                &::before {
+                    left: 0;
+                }
+            }
+
+            &:active {
+                top: 5px;
+                left: 5px;
+                
+                box-shadow: 0px 0px #383838;
+            }
+
+            &__text {
+                position: relative;
+            }
+
+        }
+
+        &__submit {
+            margin-bottom: 15px;
+        }
     }
 }

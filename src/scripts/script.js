@@ -33,9 +33,16 @@ const blockIPAdress = { // Блок с запросом айпи адресса
 
 const blockAuthorization = { // Блок авторизации
     block: document.querySelector('.authorization'),
-    input: document.querySelector('.authorization__input'),
-    error_info: document.querySelector('.authorization__error'),
-    text_input: document.querySelector('.authorization__text') 
+    username: {
+        input: document.querySelector('.authorization__block__username__input'),
+        error_info: document.querySelector('.authorization__block__username__error'),
+        text_input: document.querySelector('.authorization__block__username__text') 
+    },
+    password: {
+        input: document.querySelector('.authorization__block__password__input'),
+        error_info: document.querySelector('.authorization__block__password__error'),
+        text_input: document.querySelector('.authorization__block__password__text')
+    }
 }
 
 const blockChat = { // Блок чата
@@ -72,6 +79,7 @@ const blockListChats = { // Блок список чатов
     emptyList : document.querySelector('.window__wrapper__content__listChat__empty')
 }
 
+const textPressPasswordForAuth = 'Введите пароль...';
 const textConnectToMainChat = 'Перейти в Global Chat';
 const textInputIP = 'Введите адресс сервера';
 const textPressUsername = 'Введите никнейм';
@@ -112,7 +120,8 @@ function initText() { // Иницилизация текста в блоках
     console.log('init');
     blockIPAdress.text.textContent = textInputIP;
 
-    blockAuthorization.text_input.textContent = textPressUsername;
+    blockAuthorization.username.text_input.textContent = textPressUsername;
+    blockAuthorization.password.text_input.textContent = textPressPasswordForAuth;
     blockListChats.emptyList.textContent = textEmptyChatList;
 }
 
@@ -225,12 +234,12 @@ const requestList = new Array();
 
 const defaultHideElement = document.querySelectorAll('.hide');
 
-blockAuthorization.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для авторизации
+blockAuthorization.username.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для авторизации
     if (event.key === 'Enter') {
-        if (isCorrectNickname(blockAuthorization.input.value)) { // Если ник коректный мы отправляем на сервер
-            sendRequestAuth(blockAuthorization.input.value);
+        if (isCorrectNickname(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
+            sendRequestAuth(blockAuthorization.username.input.value);
         } else {
-            blockAuthorization.error_info.textContent = textNotCorrectNick;
+            blockAuthorization.username.error_info.textContent = textNotCorrectNick;
         }
     }
 });
@@ -615,11 +624,11 @@ function authorization(response) { // Авторизация
 
             clientUID = client.uid;
 
-            blockAuthorization.input.value = '';
+            blockAuthorization.username.input.value = '';
             blockAuthorization.block.classList.add('hide');
             //blockListChats.block.classList.remove('hide');
             blockChat.block.classList.remove('hide');
-            blockAuthorization.error_info.textContent = '';
+            blockAuthorization.username.error_info.textContent = '';
             centerBox.classList.add('hide'); // Скрываем коробку которая выравнивает по центру
             messagerBlock.classList.remove('hide'); // Включаем внутриность мессенджера
 

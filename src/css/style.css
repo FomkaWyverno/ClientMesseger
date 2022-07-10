@@ -275,7 +275,7 @@ td {
   font-size: 26px;
   border: none;
   overflow: hidden;
-  background-color: #B4B4B4;
+  background-color: #8f8f8f;
   box-shadow: 5px 5px #383838;
   cursor: pointer;
   transition: top, left .5s ease;
@@ -289,7 +289,7 @@ td {
   height: 100%;
   left: 100%;
   top: 0;
-  background-color: #08b83c;
+  background-color: #473864;
   transition: left .5s ease;
 }
 

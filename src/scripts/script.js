@@ -33,6 +33,7 @@ const blockIPAdress = { // Блок с запросом айпи адресса
 
 const blockAuthorization = { // Блок авторизации
     block: document.querySelector('.authorization'),
+    typeName: document.querySelector('.authorization__block__formName'),
     username: {
         input: document.querySelector('.authorization__block__username__input'),
         error_info: document.querySelector('.authorization__block__username__error'),
@@ -42,6 +43,14 @@ const blockAuthorization = { // Блок авторизации
         input: document.querySelector('.authorization__block__password__input'),
         error_info: document.querySelector('.authorization__block__password__error'),
         text_input: document.querySelector('.authorization__block__password__text')
+    },
+    buttonSubmitBlock: {
+        button: document.querySelector('.authorization__block__submit'),
+        text: document.querySelector('.authorization__block__submit__text')
+    },
+    buttonChangeBlock: {
+        button: document.querySelector('.authorization__block__change'),
+        text: document.querySelector('.authorization__block__change__text')
     }
 }
 
@@ -104,6 +113,13 @@ const textNotCorrectChatName = 'Имя чата должен состоят от
 const textTryConnectToSelfChat = 'Вы пытались подключиться к чату в котором вы уже состоите';
 const textIpAdressIsNotExists = 'Введите коректный ip-адресс!';
 const textConnection = 'Подключаемся...';
+const textTypeAuthLogin = 'Авторизация';
+const textTypeAuthRegistration = 'Регистрация';
+const textTypeAuthButtonSubmitLog = 'Войти!';
+const textTypeAuthButtonSumbitReg = 'Зарегистрироваться!';
+const textTypeAuthButtonChangeLog = 'У меня уже есть аккаунт!';
+const textTypeAuthButtonChangeReg = 'Создать аккаунт!';
+const textAuthErrorBadPassOrUsername = 'Имя или пароль введены не верно!';
 
 let socket;
 let clientUID;
@@ -122,6 +138,10 @@ function initText() { // Иницилизация текста в блоках
 
     blockAuthorization.username.text_input.textContent = textPressUsername;
     blockAuthorization.password.text_input.textContent = textPressPasswordForAuth;
+    blockAuthorization.typeName.textContent = textTypeAuthLogin;
+    blockAuthorization.buttonSubmitBlock.text.textContent = textTypeAuthButtonSubmitLog;
+    blockAuthorization.buttonChangeBlock.text.textContent = textTypeAuthButtonChangeReg; 
+
     blockListChats.emptyList.textContent = textEmptyChatList;
 }
 
@@ -237,10 +257,50 @@ const defaultHideElement = document.querySelectorAll('.hide');
 blockAuthorization.username.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для авторизации
     if (event.key === 'Enter') {
         if (isCorrectNickname(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
-            sendRequestAuth(blockAuthorization.username.input.value);
+            sendRequestAuth(
+                blockAuthorization.username.input.value,
+                blockAuthorization.password.input.value);
         } else {
             blockAuthorization.username.error_info.textContent = textNotCorrectNick;
         }
+    }
+});
+
+blockAuthorization.password.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для поля с паролем в авторизации
+    if (event.key === 'Enter') {
+        if (isCorrectNameChat(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
+            sendRequestAuth(
+                blockAuthorization.username.input.value,
+                blockAuthorization.password.input.value);
+        } else {
+            blockAuthorization.username.error_info.textContent = textNotCorrectChatName;
+        }
+    }
+});
+
+blockAuthorization.buttonSubmitBlock.button.addEventListener('click',() => { // Ивент на клик для сабмита
+    if (isCorrectNameChat(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
+        sendRequestAuth(
+            blockAuthorization.username.input.value,
+            blockAuthorization.password.input.value);
+    } else {
+        blockAuthorization.username.error_info.textContent = textNotCorrectChatName;
+    }
+});
+
+blockAuthorization.buttonChangeBlock.button.addEventListener('click', () => { // Сменить авторизацию на регистрацию и на оборот.
+    if (blockAuthorization.block.getAttribute('data-state') == 0) {
+        blockAuthorization.block.dataset.state = 1; // Ставим атрибут что мы переходим в регистрацию
+        blockAuthorization.buttonSubmitBlock.text.textContent = textTypeAuthButtonSumbitReg;
+        blockAuthorization.buttonChangeBlock.text.textContent = textTypeAuthButtonChangeLog;
+
+        blockAuthorization.typeName.textContent = textTypeAuthRegistration;
+    } else {
+        blockAuthorization.block.dataset.state = 0; // Ставим атрибут что мы переходим в авторизацию.
+        blockAuthorization.buttonSubmitBlock.text.textContent = textTypeAuthButtonSubmitLog;
+        blockAuthorization.buttonChangeBlock.text.textContent = textTypeAuthButtonChangeReg; 
+
+        blockAuthorization.typeName.textContent = textTypeAuthLogin;
     }
 });
 
@@ -374,6 +434,8 @@ function receivedMessage(data) { // Добавляем блок сообщени
     const blockMessage = document.createElement('li');
     const wrapperMessage = document.createElement('div');
 
+    blockMessage.dataset.userId = data.client.uid;
+
     blockMessage.classList.add('chat__messages__element');
     wrapperMessage.classList.add('chat__messages__element__message');
     blockMessage.id = `element:${data.id}`;
@@ -389,6 +451,7 @@ function receivedMessage(data) { // Добавляем блок сообщени
     
     blockText.textContent = data.message;
 
+    
     if (data.client.uid === clientUID) {
         blockMessage.classList.add('chat__messages__element--self');
         wrapperMessage.classList.add('chat__messages__element__message--self');
@@ -540,12 +603,23 @@ function sendMessage(message) { // Отправить сообщение
     sendDate(request);
 }
 
-function sendRequestAuth(nickname) { // Отправить на проверку никнейм
-    const request = {
+function sendRequestAuth(nickname, password) { // Отправить на проверку никнейм
+    if (blockAuthorization.block.getAttribute('data-state') == 0) {
+        const request = {
         type: "authorization",
-        nickname: nickname
-    };
-    sendDate(request, authorization);
+        nickname: nickname,
+        password: password
+        };
+        sendDate(request, authorization);
+    } else {
+        const request = {
+            type: 'registration',
+            nickname: nickname,
+            password: password
+        }
+        console.log('Registration!!');
+    }
+    
 }
 
 function sendRequestGetListChat() { // Отправить запрос на список листа
@@ -624,6 +698,18 @@ function authorization(response) { // Авторизация
 
             clientUID = client.uid;
 
+
+            const listMessages = blockChat.messages.children;
+
+            for (let i = 0; i < listMessages.length; i++) {
+                const user_id_message = listMessages[i].getAttribute('data-user-id');
+
+                if (user_id_message == clientUID) {
+                    listMessages[i].classList.add('chat__messages__element--self');
+                    listMessages[i].children[0].classList.add('chat__messages__element__message--self');
+                }
+            }
+
             blockAuthorization.username.input.value = '';
             blockAuthorization.block.classList.add('hide');
             //blockListChats.block.classList.remove('hide');
@@ -634,10 +720,10 @@ function authorization(response) { // Авторизация
 
             break;
         }
-        case 1: { // Ник занят 
-            blockAuthorization.error_info.textContent = textNicknameNotFree;
+        case 2: { // Не прошли авторизацию. 
+            blockAuthorization.password.error_info.textContent = textAuthErrorBadPassOrUsername;
             break;
-        }
+        } 
     }
 }
 

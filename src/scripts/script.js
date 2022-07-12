@@ -211,6 +211,7 @@ function connectToServer() {
             case 'deleteElement' : {
                 const message = JSON.parse(response.data);
                 receivedDeleteElementChat(message);
+                break;
             }
 
             case 'gotChatList' : {
@@ -224,6 +225,11 @@ function connectToServer() {
             }
 
             case 'tryCreateChat' : {
+                callbackFunction(response);
+                break;
+            }
+            
+            case 'registration' : {
                 callbackFunction(response);
                 break;
             }
@@ -268,7 +274,7 @@ blockAuthorization.username.input.addEventListener('keypress', (event) => { // �
 
 blockAuthorization.password.input.addEventListener('keypress', (event) => { // Делаем ивент на нажатие Ентера для поля с паролем в авторизации
     if (event.key === 'Enter') {
-        if (isCorrectNameChat(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
+        if (isCorrectNickname(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
             sendRequestAuth(
                 blockAuthorization.username.input.value,
                 blockAuthorization.password.input.value);
@@ -279,7 +285,7 @@ blockAuthorization.password.input.addEventListener('keypress', (event) => { // �
 });
 
 blockAuthorization.buttonSubmitBlock.button.addEventListener('click',() => { // Ивент на клик для сабмита
-    if (isCorrectNameChat(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
+    if (isCorrectNickname(blockAuthorization.username.input.value)) { // Если ник коректный мы отправляем на сервер
         sendRequestAuth(
             blockAuthorization.username.input.value,
             blockAuthorization.password.input.value);
@@ -618,6 +624,7 @@ function sendRequestAuth(nickname, password) { // Отправить на про
             password: password
         }
         console.log('Registration!!');
+        sendDate(request, registration);
     }
     
 }
@@ -701,7 +708,7 @@ function authorization(response) { // Авторизация
 
             const listMessages = blockChat.messages.children;
 
-            for (let i = 0; i < listMessages.length; i++) {
+            for (let i = 0; i < listMessages.length; i++) { // Ищем свои сообщении если мы отправляли их до того как зашли. Как нашли добавляем класс обьекту что это собственное сообщение
                 const user_id_message = listMessages[i].getAttribute('data-user-id');
 
                 if (user_id_message == clientUID) {
@@ -724,6 +731,34 @@ function authorization(response) { // Авторизация
             blockAuthorization.password.error_info.textContent = textAuthErrorBadPassOrUsername;
             break;
         } 
+    }
+}
+
+function registration(response) { // Регистрация
+    console.log('Response from SERVER on Registration >>> ');
+    console.log(response);
+
+    switch (response.code) {
+        case 0 : { // Успешно зарегистировались
+            const client = JSON.parse(response.data);
+
+            clientUID = client.uid;
+
+            blockAuthorization.username.input.value = '';
+            blockAuthorization.block.classList.add('hide');
+            //blockListChats.block.classList.remove('hide');
+            blockChat.block.classList.remove('hide');
+            blockAuthorization.username.error_info.textContent = '';
+            centerBox.classList.add('hide'); // Скрываем коробку которая выравнивает по центру
+            messagerBlock.classList.remove('hide'); // Включаем внутриность мессенджера
+
+            break;
+        }
+        
+        case 1 : { // Код = 1 Никнейм занят
+            blockAuthorization.password.error_info.textContent = textNicknameNotFree; // Отправляем сообщение что никнейм занят
+            break;
+        }
     }
 }
 
